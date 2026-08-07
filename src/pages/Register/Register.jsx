@@ -1,3 +1,4 @@
+
 import { Link } from "react-router";
 
 
@@ -13,6 +14,10 @@ const Register = () => {
     return (
         <div className="card bg-base-100 w-full mx-auto my-12 p-6 max-w-sm shrink-0 shadow-2xl">
             <h1 className="text-3xl font-bold text-center">Register now!</h1>
+
+            {/* <div>
+                <Lottie animationData={registerAnimation} loop={true}></Lottie>
+            </div> */}
             <div className="card-body">
                 <form onSubmit={handleRegister} className="fieldset">
                     <label className="label">Name</label>
