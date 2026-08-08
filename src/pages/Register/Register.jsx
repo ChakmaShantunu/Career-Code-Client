@@ -1,8 +1,12 @@
 
+import { useContext } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../../contexts/AuthContext";
 
 
 const Register = () => {
+
+    const { createUser } = useContext(AuthContext);
 
     const handleRegister = e => {
         e.preventDefault();
@@ -10,6 +14,14 @@ const Register = () => {
         const formData = new FormData(form);
         const user = Object.fromEntries(formData.entries());
         console.log(user);
+
+        createUser(user.email, user.password)
+            .then(result => {
+                console.log(result.user);
+            })
+            .catch(error => {
+                console.log(error.message);
+            })
     }
     return (
         <div className="card bg-base-100 w-full mx-auto my-12 p-6 max-w-sm shrink-0 shadow-2xl">
