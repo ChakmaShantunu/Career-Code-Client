@@ -14,7 +14,15 @@ const SignIn = () => {
         const user = Object.fromEntries(formData.entries());
         console.log(user);
 
-        
+        // sign in user
+        signInUser(user.email, user.password)
+            .then(result => {
+                console.log(result.user);
+            })
+            .catch(error => {
+                console.log(error.message);
+            })
+
     }
     return (
         <div className="card bg-base-100 w-full mx-auto my-12 p-6 max-w-sm shrink-0 shadow-2xl">
