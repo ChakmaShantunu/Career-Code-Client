@@ -65,7 +65,7 @@ const Navbar = () => {
                 </ul>
             </div>
 
-            <div className="navbar-end">
+            <div className="navbar-end space-x-4">
                 {
                     user ? <button className="btn">Sign Out</button> : <>
                         <NavLink className="btn" to="/register">Register</NavLink>

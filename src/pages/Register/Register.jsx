@@ -2,6 +2,7 @@
 import { useContext } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
+import SocialLogin from "../Shared/SocialLogin";
 
 
 const Register = () => {
@@ -46,6 +47,7 @@ const Register = () => {
                     <input type="password" name="password" className="input" placeholder="Enter Password" />
                     <button className="btn btn-neutral mt-4">Register</button>
                 </form>
+                <SocialLogin></SocialLogin>
                 <p>Already have an account? Please <Link to="/login" className="underline text-blue-400">Login</Link></p>
             </div>
         </div>
