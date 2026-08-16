@@ -1,11 +1,12 @@
 
 import { motion } from "framer-motion";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 
 const JobDetails = () => {
     const singleJob = useLoaderData();
     const {
+        _id,
         title,
         location,
         jobType,
@@ -537,14 +538,18 @@ const JobDetails = () => {
                         whileTap={{ scale: 0.97 }}
                         className="relative w-full overflow-hidden group"
                     >
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
-                        <div className="relative btn btn-primary w-full text-lg font-bold h-14 rounded-2xl shadow-xl shadow-primary/30 border-0 bg-gradient-to-r from-primary to-secondary">
-                            <span className="flex items-center gap-2">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                                </svg>
-                                Apply Now
-                            </span>
+                        <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                        <div className="relative btn btn-primary w-full text-lg font-bold h-14 rounded-2xl shadow-xl shadow-primary/30 border-0 bg-linear-to-r from-primary to-secondary">
+
+                            <Link to={`/jobapply/${_id}`}>
+                                <span className="flex items-center gap-2">
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                    </svg>
+                                    Apply Now
+                                </span>
+                            </Link>
+
                         </div>
                     </motion.button>
 
@@ -566,9 +571,9 @@ const JobDetails = () => {
                             </svg>
                         </button>
                     </div>
-                </motion.div>
-            </div>
-        </motion.div>
+                </motion.div >
+            </div >
+        </motion.div >
     );
 };
 
