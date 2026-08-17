@@ -1,6 +1,7 @@
 import { use } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
+import SocialLogin from "../Shared/SocialLogin";
 
 
 const SignIn = () => {
@@ -39,6 +40,7 @@ const SignIn = () => {
                     <input type="password" name="password" className="input" placeholder="Enter Password" />
                     <button className="btn btn-neutral mt-4">Sign In</button>
                 </form>
+                <SocialLogin from={from}></SocialLogin>
                 <p>Don't have an account? Please <Link to="/register" className="underline text-blue-400">Register</Link></p>
             </div>
         </div>
