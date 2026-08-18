@@ -10,7 +10,7 @@ const Banner = () => {
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
 
             <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-                <div className="min-h-[650px] grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-20 py-16 lg:py-20">
+                <div className="min-h-162.5 grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-20 py-16 lg:py-20">
 
                     {/* LEFT CONTENT */}
                     <div className="relative z-10">
@@ -110,7 +110,7 @@ const Banner = () => {
                                     className="group relative flex items-center gap-4 px-5 py-3 rounded-2xl bg-base-100/50 backdrop-blur-sm hover:bg-base-100/80 transition-all duration-300 border border-transparent hover:border-primary/10"
                                 >
                                     {/* Icon */}
-                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">
+                                    <div className="w-12 h-12 rounded-xl bg-linear-to-br from-primary/10 to-primary/5 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">
                                         {stat.icon}
                                     </div>
 
@@ -139,10 +139,10 @@ const Banner = () => {
                     </div>
 
                     {/* RIGHT IMAGES */}
-                    <div className="relative min-h-[520px]">
+                    <div className="relative min-h-130">
 
                         {/* Soft background */}
-                        <div className="absolute w-[420px] h-[420px] rounded-full bg-primary/5 blur-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                        <div className="absolute w-105 h-105 rounded-full bg-primary/5 blur-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
 
                         {/* Image 1 */}
                         <motion.img
@@ -167,7 +167,7 @@ const Banner = () => {
                             }}
                             src={team1}
                             alt="Team"
-                            className="absolute top-5 right-5 w-64 h-80 object-cover rounded-[2rem] shadow-2xl"
+                            className="absolute top-5 right-5 w-64 h-80 object-cover rounded-4xl shadow-2xl"
                         />
 
                         {/* Image 2 */}
@@ -221,7 +221,7 @@ const Banner = () => {
                         >
                             <div className="flex items-center gap-4">
                                 {/* Icon */}
-                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                <div className="w-12 h-12 rounded-xl bg-linear-to-br from-primary/20 to-primary/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                     <span className="text-2xl">📈</span>
                                 </div>
 
@@ -251,7 +251,7 @@ const Banner = () => {
                                     repeat: Infinity,
                                     ease: "linear",
                                 }}
-                                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary to-secondary rounded-full"
+                                className="absolute bottom-0 left-0 h-0.5 bg-linear-to-r from-primary to-secondary rounded-full"
                             />
                         </motion.div>
 
