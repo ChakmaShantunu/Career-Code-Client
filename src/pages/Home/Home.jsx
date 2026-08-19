@@ -3,6 +3,7 @@ import Banner from "./Banner";
 import HotJobs from "./HotJobs";
 import CareerTips from "./CareerTips";
 import TopCompanies from "./TopCompanies";
+import RecentBlogs from "./RecentBlogs";
 
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
             </Suspense>
             <CareerTips></CareerTips>
             <TopCompanies></TopCompanies>
+            <RecentBlogs></RecentBlogs>
         </div>
     );
 };
