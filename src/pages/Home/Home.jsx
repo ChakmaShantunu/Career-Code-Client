@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Banner from "./Banner";
 import HotJobs from "./HotJobs";
 import CareerTips from "./CareerTips";
+import TopCompanies from "./TopCompanies";
 
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
                 <HotJobs jobsPromise={jobsPromise}></HotJobs>
             </Suspense>
             <CareerTips></CareerTips>
+            <TopCompanies></TopCompanies>
         </div>
     );
 };
