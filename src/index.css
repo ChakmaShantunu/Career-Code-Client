@@ -1,0 +1,23 @@
+/* src/index.css */
+.swiper-pagination-bullet-custom {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d1d5db;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-custom:hover {
+  background: #9ca3af;
+}
+
+.swiper-pagination-bullet-active-custom {
+  background: #2563eb;
+  width: 30px;
+  border-radius: 5px;
+}
+
+.testimonial-swiper {
+  padding-bottom: 40px;
+}
