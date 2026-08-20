@@ -1,4 +1,5 @@
 import { use } from "react";
+import { motion } from "framer-motion";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -81,12 +82,68 @@ const Navbar = () => {
                     </div>
 
                     {/* Logo */}
+                    {/* Premium Logo with Animation */}
                     <Link
                         to="/"
-                        className="btn btn-ghost text-xl md:text-2xl font-extrabold tracking-tight"
+                        className="flex items-center gap-3 group relative"
                     >
-                        <span className="text-primary">Career</span>
-                        <span>Code</span>
+                        {/* Glow Effect */}
+                        <div className="absolute -inset-1 bg-linear-to-r from-primary/20 to-secondary/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                        {/* Logo Icon */}
+                        <motion.div
+                            whileHover={{
+                                scale: 1.1,
+                                rotate: 360,
+                            }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={{
+                                duration: 0.6,
+                                type: "spring",
+                                stiffness: 200,
+                            }}
+                            className="relative w-11 h-11 rounded-2xl bg-linear-to-br from-primary to-secondary flex items-center justify-center text-white text-xl shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </motion.div>
+
+                        {/* Text */}
+                        <div className="relative">
+                            <div className="flex items-center">
+                                <motion.span
+                                    whileHover={{
+                                        background: "linear-linear(to right, #2563eb, #7c3aed, #db2777)",
+                                    }}
+                                    className="text-xl md:text-2xl font-extrabold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent transition-all duration-500"
+                                >
+                                    Career
+                                </motion.span>
+                                <span className="text-xl md:text-2xl font-extrabold text-base-content group-hover:text-primary transition-colors duration-300">
+                                    Code
+                                </span>
+                            </div>
+
+                            {/* Animated Underline */}
+                            <motion.div
+                                animate={{
+                                    width: ["0%", "100%", "0%"],
+                                    x: ["0%", "0%", "100%"],
+                                }}
+                                transition={{
+                                    duration: 4,
+                                    repeat: Infinity,
+                                    ease: "easeInOut",
+                                }}
+                                className="absolute -bottom-0.5 left-0 h-0.5 bg-linear-to-r from-primary via-secondary to-accent rounded-full"
+                                style={{ width: "0%" }}
+                            />
+
+                            <p className="text-[10px] text-base-content/40 tracking-[0.15em] uppercase hidden md:block group-hover:text-primary/70 transition-colors">
+                                Your Career, Our Priority
+                            </p>
+                        </div>
                     </Link>
                 </div>
 

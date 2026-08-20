@@ -247,7 +247,7 @@ const About = () => {
     return (
         <motion.div
             ref={sectionRef}
-            className="min-h-screen bg-gradient-to-b from-base-100 via-base-200/20 to-base-100"
+            className="min-h-screen bg-linear-to-b from-base-100 via-base-200/20 to-base-100"
             variants={sectionVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
@@ -257,7 +257,7 @@ const About = () => {
                 variants={heroVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                className="relative overflow-hidden py-20 px-5 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10"
+                className="relative overflow-hidden py-20 px-5 bg-linear-to-br"
             >
                 <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
                 <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
@@ -282,7 +282,7 @@ const About = () => {
                     >
                         Connecting Talent with
                         <br />
-                        <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                        <span className="bg-linear-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                             Opportunity
                         </span>
                     </motion.h1>
@@ -371,7 +371,7 @@ const About = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <motion.div
                         variants={itemVariants}
-                        className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/10"
+                        className="p-8 rounded-3xl bg-linear-to-br from-primary/10 to-secondary/10 border border-primary/10"
                     >
                         <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
                             <FaRocket className="text-2xl text-primary" />
@@ -386,7 +386,7 @@ const About = () => {
 
                     <motion.div
                         variants={itemVariants}
-                        className="p-8 rounded-3xl bg-gradient-to-br from-secondary/10 to-accent/10 border border-secondary/10"
+                        className="p-8 rounded-3xl bg-linear-to-br from-secondary/10 to-accent/10 border border-secondary/10"
                     >
                         <div className="w-14 h-14 rounded-2xl bg-secondary/20 flex items-center justify-center mb-4">
                             <FaGlobe className="text-2xl text-secondary" />
@@ -428,7 +428,7 @@ const About = () => {
                             }}
                             className="group p-6 rounded-2xl bg-base-100 shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50 hover:border-transparent relative overflow-hidden"
                         >
-                            <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${value.color} group-hover:h-1.5 transition-all duration-300`} />
+                            <div className={`absolute top-0 left-0 right-0 h-1 bg-linear-to-r ${value.color} group-hover:h-1.5 transition-all duration-300`} />
                             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
                                 {value.icon}
                             </div>
@@ -672,7 +672,7 @@ const About = () => {
             >
                 <motion.div
                     variants={itemVariants}
-                    className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-secondary to-accent p-10 text-center text-white"
+                    className="relative overflow-hidden rounded-3xl bg-linear-to-r from-primary via-secondary to-accent p-10 text-center text-white"
                 >
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
