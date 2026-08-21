@@ -1,6 +1,23 @@
 import { motion } from "framer-motion";
+import { useNavigate, useParams } from "react-router";
+import useAuth from "../../hooks/useAuth";
 
 const JobApply = () => {
+
+    const { id: jobId } = useParams();
+    const { user } = useAuth();
+
+    const handleApplyFormSubmit = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const resume = form.resume.value;
+        const coverLetter = form.coverLetter.value;
+        console.log(name, email, resume, coverLetter);
+    };
+
+    const navigate = useNavigate();
     // Animation variants for better organization
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -23,7 +40,7 @@ const JobApply = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="min-h-screen bg-gradient-to-br from-base-200/50 via-base-100 to-base-200/30 py-8 md:py-16 px-4"
+            className="min-h-screen bg-linear-to-br from-base-200/50 via-base-100 to-base-200/30 py-8 md:py-16 px-4"
         >
             <div className="max-w-4xl mx-auto">
                 {/* ===== HEADER SECTION ===== */}
@@ -82,10 +99,10 @@ const JobApply = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="text-3xl md:text-5xl font-extrabold mt-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+                        className="text-3xl md:text-5xl font-extrabold mt-6 bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent"
                     >
                         Apply for{" "}
-                        <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+                        <span className="bg-linear-to-r from-accent to-primary bg-clip-text text-transparent">
                             title
                         </span>
                     </motion.h1>
@@ -165,7 +182,7 @@ const JobApply = () => {
                             <div className="divider mt-4" />
                         </motion.div>
 
-                        <form className="space-y-6">
+                        <form onSubmit={handleApplyFormSubmit} className="space-y-6">
                             {/* ===== FULL NAME ===== */}
                             <motion.div variants={itemVariants} className="group">
                                 <label className="label">
@@ -322,7 +339,7 @@ const JobApply = () => {
 
                             {/* ===== APPLICATION SUMMARY ===== */}
                             <motion.div variants={itemVariants}>
-                                <div className="bg-gradient-to-br from-base-200/70 via-base-200/30 to-base-100 rounded-2xl p-6 border-2 border-base-200/50 backdrop-blur-sm">
+                                <div className="bg-linear-to-br from-base-200/70 via-base-200/30 to-base-100 rounded-2xl p-6 border-2 border-base-200/50 backdrop-blur-sm">
                                     <div className="flex items-center gap-3 mb-4">
                                         <div className="p-1.5 rounded-lg bg-warning/10 text-warning">
                                             <svg
@@ -408,8 +425,8 @@ const JobApply = () => {
                                     type="submit"
                                     className="relative w-full overflow-hidden group"
                                 >
-                                    <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
-                                    <div className="relative btn btn-primary w-full text-lg font-bold h-14 rounded-2xl shadow-xl shadow-primary/30 border-0 bg-gradient-to-r from-primary to-secondary">
+                                    <div className="absolute inset-0 bg-linear-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                                    <div className="relative btn btn-primary w-full text-lg font-bold h-14 rounded-2xl shadow-xl shadow-primary/30 border-0 bg-linear-to-r from-primary to-secondary">
                                         <span className="flex items-center gap-3">
                                             <svg
                                                 className="w-5 h-5"
@@ -476,7 +493,9 @@ const JobApply = () => {
                     transition={{ delay: 0.8 }}
                     className="mt-6 text-center"
                 >
-                    <button className="btn btn-ghost btn-sm gap-2 hover:bg-base-200/50">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="btn btn-ghost btn-sm gap-2 hover:bg-base-200/50">
                         <svg
                             className="w-4 h-4"
                             fill="none"
