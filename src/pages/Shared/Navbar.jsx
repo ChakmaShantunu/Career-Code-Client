@@ -21,6 +21,7 @@ const Navbar = () => {
         { path: "/about", label: "About" },
         { path: "/readList", label: "Read List" },
         { path: "/wishList", label: "Wish List" },
+        ...(user ? [{ path: "/myApplications", label: "Application List" }] : []),
     ];
 
     const links = (
