@@ -1,6 +1,6 @@
 // components/ApplicationList.jsx
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { use, useRef, useState } from "react";
 import {
     FaSearch,
     FaFilter,
@@ -21,12 +21,13 @@ import {
     FaPrint,
     FaEllipsisV,
     FaChevronLeft,
-    FaChevronRight
+    FaChevronRight,
 } from "react-icons/fa";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
-const ApplicationList = () => {
+const ApplicationList = ({ myApplicationsPromise }) => {
+    const applications = use(myApplicationsPromise);
     const sectionRef = useRef(null);
     const isInView = useInView(sectionRef, {
         once: false,
@@ -42,106 +43,106 @@ const ApplicationList = () => {
     const itemsPerPage = 5;
 
     // ===== DUMMY DATA =====
-    const applications = [
-        {
-            id: 1,
-            applicant: "John Doe",
-            email: "john@example.com",
-            phone: "+1 (555) 123-4567",
-            position: "Senior Developer",
-            company: "Google",
-            appliedDate: "2024-01-15",
-            status: "approved",
-            resume: "https://drive.google.com/...",
-            coverLetter: "Lorem ipsum dolor sit amet...",
-            location: "Mountain View, CA",
-            experience: "5 years",
-        },
-        {
-            id: 2,
-            applicant: "Sarah Smith",
-            email: "sarah@example.com",
-            phone: "+1 (555) 234-5678",
-            position: "UI/UX Designer",
-            company: "Microsoft",
-            appliedDate: "2024-01-14",
-            status: "pending",
-            resume: "https://drive.google.com/...",
-            coverLetter: "Consectetur adipiscing elit...",
-            location: "Redmond, WA",
-            experience: "3 years",
-        },
-        {
-            id: 3,
-            applicant: "Mike Johnson",
-            email: "mike@example.com",
-            phone: "+1 (555) 345-6789",
-            position: "Product Manager",
-            company: "Apple",
-            appliedDate: "2024-01-13",
-            status: "rejected",
-            resume: "https://drive.google.com/...",
-            coverLetter: "Sed do eiusmod tempor...",
-            location: "Cupertino, CA",
-            experience: "7 years",
-        },
-        {
-            id: 4,
-            applicant: "Emily Davis",
-            email: "emily@example.com",
-            phone: "+1 (555) 456-7890",
-            position: "Data Scientist",
-            company: "Amazon",
-            appliedDate: "2024-01-12",
-            status: "reviewing",
-            resume: "https://drive.google.com/...",
-            coverLetter: "Ut labore et dolore magna...",
-            location: "Seattle, WA",
-            experience: "4 years",
-        },
-        {
-            id: 5,
-            applicant: "David Wilson",
-            email: "david@example.com",
-            phone: "+1 (555) 567-8901",
-            position: "DevOps Engineer",
-            company: "Netflix",
-            appliedDate: "2024-01-11",
-            status: "approved",
-            resume: "https://drive.google.com/...",
-            coverLetter: "Quis nostrud exercitation...",
-            location: "Los Gatos, CA",
-            experience: "6 years",
-        },
-        {
-            id: 6,
-            applicant: "Lisa Martinez",
-            email: "lisa@example.com",
-            phone: "+1 (555) 678-9012",
-            position: "Frontend Developer",
-            company: "Meta",
-            appliedDate: "2024-01-10",
-            status: "pending",
-            resume: "https://drive.google.com/...",
-            coverLetter: "Duis aute irure dolor...",
-            location: "Menlo Park, CA",
-            experience: "2 years",
-        },
-        {
-            id: 7,
-            applicant: "Tom Harris",
-            email: "tom@example.com",
-            phone: "+1 (555) 789-0123",
-            position: "Backend Developer",
-            company: "Spotify",
-            appliedDate: "2024-01-09",
-            status: "approved",
-            resume: "https://drive.google.com/...",
-            coverLetter: "Excepteur sint occaecat...",
-            location: "Stockholm, Sweden",
-            experience: "4 years",
-        },
-    ];
+    // const applications = [
+    //     {
+    //         id: 1,
+    //         applicant: "John Doe",
+    //         email: "john@example.com",
+    //         phone: "+1 (555) 123-4567",
+    //         position: "Senior Developer",
+    //         company: "Google",
+    //         appliedDate: "2024-01-15",
+    //         status: "approved",
+    //         resume: "https://drive.google.com/...",
+    //         coverLetter: "Lorem ipsum dolor sit amet...",
+    //         location: "Mountain View, CA",
+    //         experience: "5 years",
+    //     },
+    //     {
+    //         id: 2,
+    //         applicant: "Sarah Smith",
+    //         email: "sarah@example.com",
+    //         phone: "+1 (555) 234-5678",
+    //         position: "UI/UX Designer",
+    //         company: "Microsoft",
+    //         appliedDate: "2024-01-14",
+    //         status: "pending",
+    //         resume: "https://drive.google.com/...",
+    //         coverLetter: "Consectetur adipiscing elit...",
+    //         location: "Redmond, WA",
+    //         experience: "3 years",
+    //     },
+    //     {
+    //         id: 3,
+    //         applicant: "Mike Johnson",
+    //         email: "mike@example.com",
+    //         phone: "+1 (555) 345-6789",
+    //         position: "Product Manager",
+    //         company: "Apple",
+    //         appliedDate: "2024-01-13",
+    //         status: "rejected",
+    //         resume: "https://drive.google.com/...",
+    //         coverLetter: "Sed do eiusmod tempor...",
+    //         location: "Cupertino, CA",
+    //         experience: "7 years",
+    //     },
+    //     {
+    //         id: 4,
+    //         applicant: "Emily Davis",
+    //         email: "emily@example.com",
+    //         phone: "+1 (555) 456-7890",
+    //         position: "Data Scientist",
+    //         company: "Amazon",
+    //         appliedDate: "2024-01-12",
+    //         status: "reviewing",
+    //         resume: "https://drive.google.com/...",
+    //         coverLetter: "Ut labore et dolore magna...",
+    //         location: "Seattle, WA",
+    //         experience: "4 years",
+    //     },
+    //     {
+    //         id: 5,
+    //         applicant: "David Wilson",
+    //         email: "david@example.com",
+    //         phone: "+1 (555) 567-8901",
+    //         position: "DevOps Engineer",
+    //         company: "Netflix",
+    //         appliedDate: "2024-01-11",
+    //         status: "approved",
+    //         resume: "https://drive.google.com/...",
+    //         coverLetter: "Quis nostrud exercitation...",
+    //         location: "Los Gatos, CA",
+    //         experience: "6 years",
+    //     },
+    //     {
+    //         id: 6,
+    //         applicant: "Lisa Martinez",
+    //         email: "lisa@example.com",
+    //         phone: "+1 (555) 678-9012",
+    //         position: "Frontend Developer",
+    //         company: "Meta",
+    //         appliedDate: "2024-01-10",
+    //         status: "pending",
+    //         resume: "https://drive.google.com/...",
+    //         coverLetter: "Duis aute irure dolor...",
+    //         location: "Menlo Park, CA",
+    //         experience: "2 years",
+    //     },
+    //     {
+    //         id: 7,
+    //         applicant: "Tom Harris",
+    //         email: "tom@example.com",
+    //         phone: "+1 (555) 789-0123",
+    //         position: "Backend Developer",
+    //         company: "Spotify",
+    //         appliedDate: "2024-01-09",
+    //         status: "approved",
+    //         resume: "https://drive.google.com/...",
+    //         coverLetter: "Excepteur sint occaecat...",
+    //         location: "Stockholm, Sweden",
+    //         experience: "4 years",
+    //     },
+    // ];
 
     // ===== FILTER LOGIC =====
     const getStatusColor = (status) => {
@@ -176,10 +177,10 @@ const ApplicationList = () => {
 
     const filteredApplications = applications.filter(app => {
         const matchesSearch =
-            app.applicant.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            app.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            app.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            app.email.toLowerCase().includes(searchTerm.toLowerCase());
+            app.applicant?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            app.linkedIn?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            app.github?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            app.resume?.toLowerCase().includes(searchTerm.toLowerCase());
 
         const matchesStatus = filterStatus === "all" || app.status === filterStatus;
 
@@ -368,17 +369,17 @@ const ApplicationList = () => {
                                     Applicant
                                 </th>
                                 <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-base-content/50 hidden md:table-cell">
-                                    Position
+                                    Linkedin
                                 </th>
                                 <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-base-content/50 hidden lg:table-cell">
-                                    Company
+                                    Github
                                 </th>
                                 <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-base-content/50 hidden sm:table-cell">
-                                    Applied Date
+                                    Resume Link
                                 </th>
-                                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-base-content/50">
+                                {/* <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-base-content/50">
                                     Status
-                                </th>
+                                </th> */}
                                 <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-base-content/50">
                                     Actions
                                 </th>
@@ -389,24 +390,24 @@ const ApplicationList = () => {
                             {currentItems.length > 0 ? (
                                 currentItems.map((app, index) => (
                                     <motion.tr
-                                        key={app.id}
+                                        key={app._id}
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: index * 0.05 }}
-                                        className={`hover:bg-base-200/30 transition-colors ${selectedRows.includes(app.id) ? "bg-primary/5" : ""
+                                        className={`hover:bg-base-200/30 transition-colors ${selectedRows.includes(app._id) ? "bg-primary/5" : ""
                                             }`}
                                     >
                                         <td className="px-4 py-3">
                                             <input
                                                 type="checkbox"
                                                 className="checkbox checkbox-primary checkbox-sm rounded-md"
-                                                checked={selectedRows.includes(app.id)}
-                                                onChange={() => handleSelectRow(app.id)}
+                                                checked={selectedRows.includes(app._id)}
+                                                onChange={() => handleSelectRow(app._id)}
                                             />
                                         </td>
                                         <td className="px-4 py-3">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-primary font-bold text-sm flex-shrink-0">
+                                                <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-primary font-bold text-sm shrink-0">
                                                     {app.applicant.charAt(0)}
                                                 </div>
                                                 <div>
@@ -416,12 +417,23 @@ const ApplicationList = () => {
                                             </div>
                                         </td>
                                         <td className="px-4 py-3 hidden md:table-cell">
-                                            <p className="text-sm">{app.position}</p>
+                                            <p className="text-sm">{app.linkedIn}</p>
                                         </td>
                                         <td className="px-4 py-3 hidden lg:table-cell">
-                                            <p className="text-sm text-base-content/70">{app.company}</p>
+                                            <p className="text-sm text-base-content/70">{app.github}</p>
                                         </td>
                                         <td className="px-4 py-3 hidden sm:table-cell">
+                                            <a
+                                                href={app.resume}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors text-sm font-medium"
+                                            >
+                                                <FaFileAlt />
+                                                Resume
+                                            </a>
+                                        </td>
+                                        {/* <td className="px-4 py-3 hidden sm:table-cell">
                                             <p className="text-sm text-base-content/50">
                                                 {new Date(app.appliedDate).toLocaleDateString('en-US', {
                                                     month: 'short',
@@ -435,27 +447,27 @@ const ApplicationList = () => {
                                                 {getStatusIcon(app.status)}
                                                 {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
                                             </span>
-                                        </td>
+                                        </td> */}
                                         <td className="px-4 py-3">
                                             <div className="flex items-center justify-end gap-2">
                                                 <button
                                                     className="w-8 h-8 rounded-lg hover:bg-primary/10 text-primary transition-colors flex items-center justify-center"
                                                     title="View"
-                                                    onClick={() => console.log("View", app.id)}
+                                                    onClick={() => console.log("View", app._id)}
                                                 >
                                                     <FaEye className="text-sm" />
                                                 </button>
                                                 <button
                                                     className="w-8 h-8 rounded-lg hover:bg-warning/10 text-warning transition-colors flex items-center justify-center"
                                                     title="Edit Status"
-                                                    onClick={() => handleStatusChange(app.id, "reviewing")}
+                                                    onClick={() => handleStatusChange(app._id, "reviewing")}
                                                 >
                                                     <FaEdit className="text-sm" />
                                                 </button>
                                                 <button
                                                     className="w-8 h-8 rounded-lg hover:bg-error/10 text-error transition-colors flex items-center justify-center"
                                                     title="Delete"
-                                                    onClick={() => handleDelete(app.id, app.applicant)}
+                                                    onClick={() => handleDelete(app._id, app.applicant)}
                                                 >
                                                     <FaTrash className="text-sm" />
                                                 </button>
@@ -513,8 +525,8 @@ const ApplicationList = () => {
                                     key={i}
                                     onClick={() => setCurrentPage(i + 1)}
                                     className={`w-8 h-8 rounded-lg transition-colors ${currentPage === i + 1
-                                            ? "bg-primary text-white shadow-lg shadow-primary/20"
-                                            : "hover:bg-base-200"
+                                        ? "bg-primary text-white shadow-lg shadow-primary/20"
+                                        : "hover:bg-base-200"
                                         }`}
                                 >
                                     {i + 1}
