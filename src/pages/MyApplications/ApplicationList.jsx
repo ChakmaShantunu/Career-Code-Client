@@ -30,6 +30,8 @@ import Swal from "sweetalert2";
 
 const ApplicationList = ({ myApplicationsPromise }) => {
     const applications = use(myApplicationsPromise);
+    console.log("📊 Total applications from API:", applications?.length);
+    console.log("📝 Applications data:", applications);
     const sectionRef = useRef(null);
     const isInView = useInView(sectionRef, {
         once: false,

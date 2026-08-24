@@ -51,12 +51,12 @@ const JobApply = () => {
                     text: "Your application has been sent successfully. Good luck!",
                     icon: "success",
                     confirmButtonColor: "#2563eb",
-                    confirmButtonText: "View Jobs",
+                    confirmButtonText: "My Applications",
                     timer: 3000,
                     timerProgressBar: true,
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        navigate('/jobs');
+                        navigate('/myApplications');
                     }
                 });
                 form.reset();
