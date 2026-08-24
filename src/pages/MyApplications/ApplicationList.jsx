@@ -22,6 +22,8 @@ import {
     FaEllipsisV,
     FaChevronLeft,
     FaChevronRight,
+    FaLinkedin,
+    FaGithub,
 } from "react-icons/fa";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
@@ -417,10 +419,28 @@ const ApplicationList = ({ myApplicationsPromise }) => {
                                             </div>
                                         </td>
                                         <td className="px-4 py-3 hidden md:table-cell">
-                                            <p className="text-sm">{app.linkedIn}</p>
+                                            {/* <p className="text-sm">{app.linkedIn}</p> */}
+                                            <a
+                                                href={app.linkedIn}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors text-sm font-medium"
+                                            >
+                                                <FaLinkedin />
+                                                Linkedin
+                                            </a>
                                         </td>
                                         <td className="px-4 py-3 hidden lg:table-cell">
-                                            <p className="text-sm text-base-content/70">{app.github}</p>
+                                            {/* <p className="text-sm text-base-content/70">{app.github}</p> */}
+                                            <a
+                                                href={app.github}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors text-sm font-medium"
+                                            >
+                                                <FaGithub />
+                                                Github
+                                            </a>
                                         </td>
                                         <td className="px-4 py-3 hidden sm:table-cell">
                                             <a
