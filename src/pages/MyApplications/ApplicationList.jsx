@@ -30,8 +30,8 @@ import Swal from "sweetalert2";
 
 const ApplicationList = ({ myApplicationsPromise }) => {
     const applications = use(myApplicationsPromise);
-    console.log("📊 Total applications from API:", applications?.length);
-    console.log("📝 Applications data:", applications);
+    const [applicationList, setApplicationList] = useState(applications);
+
     const sectionRef = useRef(null);
     const isInView = useInView(sectionRef, {
         once: false,
@@ -179,7 +179,7 @@ const ApplicationList = ({ myApplicationsPromise }) => {
         }
     };
 
-    const filteredApplications = applications.filter(app => {
+    const filteredApplications = applicationList.filter(app => {
         const matchesSearch =
             app.applicant?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             app.linkedIn?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -225,11 +225,22 @@ const ApplicationList = ({ myApplicationsPromise }) => {
             confirmButtonText: "Yes, delete!",
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Application has been deleted.",
-                    icon: "success",
-                });
+                fetch(`http://localhost:3000/applications/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Application has been deleted.",
+                                icon: "success",
+                            });
+
+                            const remainingApplications = applicationList.filter((application) => application._id !== id);
+                            setApplicationList(remainingApplications);
+                        }
+                    })
             }
         });
     };
