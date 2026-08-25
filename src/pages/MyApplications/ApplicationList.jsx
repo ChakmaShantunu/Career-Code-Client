@@ -245,6 +245,44 @@ const ApplicationList = ({ myApplicationsPromise }) => {
         });
     };
 
+    const handleBulkDelete = () => {
+        Swal.fire({
+            title: "Delete Applications?",
+            text: `Are you sure you want to delete ${selectedRows.length} applications?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#ef4444",
+            cancelButtonColor: "#6b7280",
+            confirmButtonText: "Yes, delete!",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await Promise.all(
+                    selectedRows.map((id) => fetch(`http://localhost:3000/applications/${id}`, {
+                        method: 'DELETE'
+                    }))
+                );
+
+                setApplicationList((prevApplications) => {
+                    const remainingApplications = prevApplications.filter(
+                        (application) => !selectedRows.includes(application._id)
+                    );
+
+                    console.log("remainingApplications:", remainingApplications);
+
+                    return remainingApplications;
+                });
+
+                setSelectedRows([]);
+
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Selected applications have been deleted.",
+                    icon: "success",
+                });
+            }
+        });
+    };
+
     const handleStatusChange = (id, newStatus) => {
         Swal.fire({
             title: "Update Status",
@@ -610,7 +648,7 @@ const ApplicationList = ({ myApplicationsPromise }) => {
                             <FaTimesCircle />
                             Reject
                         </button>
-                        <button className="btn btn-ghost btn-sm rounded-xl gap-2">
+                        <button onClick={handleBulkDelete} className="btn btn-ghost btn-sm rounded-xl gap-2">
                             <FaTrash />
                             Delete
                         </button>
