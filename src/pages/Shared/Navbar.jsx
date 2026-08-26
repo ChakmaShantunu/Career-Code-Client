@@ -19,9 +19,12 @@ const Navbar = () => {
     const navItems = [
         { path: "/", label: "Home" },
         { path: "/about", label: "About" },
-        { path: "/readList", label: "Read List" },
-        { path: "/wishList", label: "Wish List" },
+        // { path: "/readList", label: "Read List" },
+        // { path: "/wishList", label: "Wish List" },
         ...(user ? [{ path: "/myApplications", label: "Application List" }] : []),
+
+        // for recruiter and check role as well
+        ...(user ? [{ path: "/addJob", label: "Add Job" }] : [])
     ];
 
     const links = (
