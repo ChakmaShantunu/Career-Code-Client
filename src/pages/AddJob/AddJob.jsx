@@ -158,7 +158,7 @@ const AddJob = () => {
                     timerProgressBar: true,
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        navigate('/jobs');
+                        navigate('/');
                     }
                 });
 
@@ -224,7 +224,7 @@ const AddJob = () => {
     return (
         <motion.div
             ref={sectionRef}
-            className="min-h-screen bg-gradient-to-br from-base-200/50 via-base-100 to-base-200/30 py-8 md:py-16 px-4"
+            className="min-h-screen bg-linear-to-br from-base-200/50 via-base-100 to-base-200/30 py-8 md:py-16 px-4"
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}

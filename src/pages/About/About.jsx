@@ -695,7 +695,7 @@ const About = () => {
                                     <FaArrowRight />
                                 </motion.button>
                             </Link>
-                            <Link to="/post-job">
+                            <Link to="/addJob">
                                 <motion.button
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
