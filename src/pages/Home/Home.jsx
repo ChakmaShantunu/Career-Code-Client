@@ -5,6 +5,7 @@ import CareerTips from "./CareerTips";
 import TopCompanies from "./TopCompanies";
 import RecentBlogs from "./RecentBlogs";
 import Newsletter from "./Newsletter";
+import ScrollToTop from "../Shared/ScrollToTop";
 
 
 const Home = () => {
@@ -21,6 +22,7 @@ const Home = () => {
             <TopCompanies></TopCompanies>
             <RecentBlogs></RecentBlogs>
             <Newsletter></Newsletter>
+            <ScrollToTop></ScrollToTop>
         </div>
     );
 };
