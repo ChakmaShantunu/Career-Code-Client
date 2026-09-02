@@ -7,22 +7,25 @@ import RecentBlogs from "./RecentBlogs";
 import Newsletter from "./Newsletter";
 import ScrollToTop from "../Shared/ScrollToTop";
 
-
 const Home = () => {
-
     const jobsPromise = fetch('http://localhost:3000/jobs').then(res => res.json());
 
     return (
         <div>
-            <Banner></Banner>
+            <Banner />
             <Suspense fallback={<p className="text-center">Loading jobs...</p>}>
-                <HotJobs jobsPromise={jobsPromise}></HotJobs>
+                <HotJobs jobsPromise={jobsPromise} />
             </Suspense>
-            <CareerTips></CareerTips>
-            <TopCompanies></TopCompanies>
-            <RecentBlogs></RecentBlogs>
-            <Newsletter></Newsletter>
-            <ScrollToTop></ScrollToTop>
+            <CareerTips />
+
+            {/* Add scroll-mt-20 for navbar offset */}
+            <section id="top-companies" className="scroll-mt-20">
+                <TopCompanies />
+            </section>
+
+            <RecentBlogs />
+            <Newsletter />
+            <ScrollToTop />
         </div>
     );
 };

@@ -1,10 +1,13 @@
 import { use } from "react";
 import { motion } from "framer-motion";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate, useLocation } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
+import { useEffect } from "react";
 
 const Navbar = () => {
     const { user, signOutUser } = use(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleSignOut = () => {
         signOutUser()
@@ -16,44 +19,96 @@ const Navbar = () => {
             });
     };
 
+    // Handle hash routing when page loads or hash changes
+    useEffect(() => {
+        if (location.hash === '#top-companies') {
+            setTimeout(() => {
+                const element = document.getElementById('top-companies');
+                if (element) {
+                    element.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                    });
+                }
+            }, 200);
+        }
+    }, [location]);
+
+    const handleTopCompaniesClick = (e) => {
+        e.preventDefault();
+
+        // If already on home page
+        if (location.pathname === '/') {
+            const element = document.getElementById('top-companies');
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                });
+                // Update URL without reload
+                window.history.pushState(null, '', '/#top-companies');
+            }
+        } else {
+            // Navigate to home with hash
+            navigate('/#top-companies');
+        }
+    };
+
     const navItems = [
         { path: "/", label: "Home" },
         { path: "/about", label: "About" },
-        // { path: "/readList", label: "Read List" },
-        // { path: "/wishList", label: "Wish List" },
         ...(user ? [{ path: "/myApplications", label: "Application List" }] : []),
-
-        // for recruiter and check role as well
-        ...(user ? [{ path: "/addJob", label: "Add Job" }] : [])
+        ...(user ? [{ path: "/addJob", label: "Add Job" }] : []),
+        {
+            path: "/#top-companies",
+            label: "Top Companies",
+            isHash: true
+        }
     ];
 
     const links = (
         <>
-            {navItems.map((item) => (
-                <li key={item.path}>
-                    <NavLink
-                        to={item.path}
-                        className={({ isActive }) =>
-                            `font-medium transition-all duration-300 ${isActive
-                                ? "text-primary bg-primary/10"
-                                : "hover:text-primary hover:bg-primary/5"
-                            }`
-                        }
-                    >
-                        {item.label}
-                    </NavLink>
-                </li>
-            ))}
+            {navItems.map((item) => {
+                // For Top Companies - use a tag with onClick
+                if (item.isHash) {
+                    return (
+                        <li key={item.path}>
+                            <a
+                                href={item.path}
+                                onClick={handleTopCompaniesClick}
+                                className="font-medium transition-all duration-300 hover:text-primary hover:bg-primary/5 block px-4 py-2 rounded-lg"
+                            >
+                                {item.label}
+                            </a>
+                        </li>
+                    );
+                }
+
+                // For regular links - use NavLink
+                return (
+                    <li key={item.path}>
+                        <NavLink
+                            to={item.path}
+                            className={({ isActive }) =>
+                                `font-medium transition-all duration-300 block px-4 py-2 rounded-lg ${isActive
+                                    ? "text-primary bg-primary/10"
+                                    : "hover:text-primary hover:bg-primary/5"
+                                }`
+                            }
+                        >
+                            {item.label}
+                        </NavLink>
+                    </li>
+                );
+            })}
         </>
     );
 
     return (
         <div className="sticky top-0 z-50 px-3 md:px-6 pt-3">
             <div className="navbar max-w-7xl mx-auto bg-base-100/90 backdrop-blur-xl shadow-lg border border-base-200 rounded-2xl px-4 md:px-6">
-
                 {/* Navbar Start */}
                 <div className="navbar-start">
-
                     {/* Mobile Menu */}
                     <div className="dropdown">
                         <div
@@ -76,7 +131,6 @@ const Navbar = () => {
                                 />
                             </svg>
                         </div>
-
                         <ul
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-2xl z-50 mt-3 w-56 p-3 shadow-xl border border-base-200"
@@ -86,15 +140,11 @@ const Navbar = () => {
                     </div>
 
                     {/* Logo */}
-                    {/* Premium Logo with Animation */}
                     <Link
                         to="/"
                         className="flex items-center gap-3 group relative"
                     >
-                        {/* Glow Effect */}
                         <div className="absolute -inset-1 bg-linear-to-r from-primary/20 to-secondary/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                        {/* Logo Icon */}
                         <motion.div
                             whileHover={{
                                 scale: 1.1,
@@ -112,8 +162,6 @@ const Navbar = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                         </motion.div>
-
-                        {/* Text */}
                         <div className="relative">
                             <div className="flex items-center">
                                 <motion.span
@@ -128,8 +176,6 @@ const Navbar = () => {
                                     Code
                                 </span>
                             </div>
-
-                            {/* Animated Underline */}
                             <motion.div
                                 animate={{
                                     width: ["0%", "100%", "0%"],
@@ -143,7 +189,6 @@ const Navbar = () => {
                                 className="absolute -bottom-0.5 left-0 h-0.5 bg-linear-to-r from-primary via-secondary to-accent rounded-full"
                                 style={{ width: "0%" }}
                             />
-
                             <p className="text-[10px] text-base-content/40 tracking-[0.15em] uppercase hidden md:block group-hover:text-primary/70 transition-colors">
                                 Your Career, Our Priority
                             </p>
@@ -160,11 +205,8 @@ const Navbar = () => {
 
                 {/* Navbar End */}
                 <div className="navbar-end">
-
                     {user ? (
                         <div className="flex items-center gap-2 md:gap-3">
-
-                            {/* User Info */}
                             <div className="hidden sm:flex items-center gap-2">
                                 <div className="avatar">
                                     <div className="w-9 rounded-full ring-2 ring-primary/20">
@@ -177,7 +219,6 @@ const Navbar = () => {
                                         />
                                     </div>
                                 </div>
-
                                 <div className="hidden md:block">
                                     <p className="text-sm font-semibold leading-none">
                                         {user.displayName || "User"}
@@ -187,8 +228,6 @@ const Navbar = () => {
                                     </p>
                                 </div>
                             </div>
-
-                            {/* Sign Out */}
                             <button
                                 onClick={handleSignOut}
                                 className="btn btn-sm md:btn-md rounded-xl border-0 bg-error/10 text-error hover:bg-error hover:text-white transition-all duration-300"
@@ -204,7 +243,6 @@ const Navbar = () => {
                             >
                                 Register
                             </NavLink>
-
                             <NavLink
                                 to="/signIn"
                                 className="btn btn-sm md:btn-md btn-primary rounded-xl shadow-md shadow-primary/20 hover:scale-105 transition-transform"
