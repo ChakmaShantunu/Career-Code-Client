@@ -38,7 +38,7 @@ const JobApply = () => {
             coverLetter
         };
 
-        setIsLoading(true);
+    setIsLoading(true)
 
         try {
             const response = await axios.post('http://localhost:3000/applications', application);

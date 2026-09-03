@@ -1,5 +1,6 @@
 // pages/About.jsx
 import { motion, useInView } from "framer-motion";
+import { useRef, useState, useEffect, lazy, Suspense } from "react";
 import {
     FaUsers,
     FaBuilding,
@@ -15,18 +16,81 @@ import {
     FaArrowRight,
     FaLinkedinIn,
     FaTwitter,
-    FaStar
+    FaStar,
+    FaShareAlt,
+    FaFacebook,
+    FaWhatsapp
 } from "react-icons/fa";
 import { Link } from "react-router";
-import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules';
 
-// ✅ Swiper CSS Import
+// Swiper CSS
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
+
+// ===== কাস্টম হুক: কাউন্টার অ্যানিমেশন =====
+const useCounter = (target, duration = 2000) => {
+    const [count, setCount] = useState(0);
+    const [isVisible, setIsVisible] = useState(false);
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.5 }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => {
+            if (ref.current) {
+                observer.unobserve(ref.current);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!isVisible) return;
+
+        let startTime = null;
+        const startValue = 0;
+        const endValue = parseInt(target.replace(/[^0-9]/g, ''));
+
+        const animateCount = (timestamp) => {
+            if (!startTime) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            const currentValue = Math.floor(progress * endValue);
+            setCount(currentValue);
+
+            if (progress < 1) {
+                requestAnimationFrame(animateCount);
+            } else {
+                setCount(endValue);
+            }
+        };
+
+        requestAnimationFrame(animateCount);
+    }, [isVisible, target, duration]);
+
+    return { count, ref, isVisible };
+};
+
+// ===== স্কেলেটন লোডার =====
+const SkeletonLoader = () => (
+    <div className="animate-pulse">
+        <div className="h-4 bg-base-300 rounded w-3/4 mb-4"></div>
+        <div className="h-4 bg-base-300 rounded w-1/2"></div>
+    </div>
+);
 
 const About = () => {
     const sectionRef = useRef(null);
@@ -35,6 +99,12 @@ const About = () => {
         amount: 0.1,
         margin: "0px 0px -100px 0px",
     });
+
+    // ===== কাউন্টার হুক ব্যবহার =====
+    const userCounter = useCounter("10K+");
+    const companyCounter = useCounter("5K+");
+    const jobCounter = useCounter("25K+");
+    const countryCounter = useCounter("150+");
 
     // ===== ANIMATION VARIANTS =====
     const sectionVariants = {
@@ -98,10 +168,34 @@ const About = () => {
 
     // ===== DATA =====
     const stats = [
-        { number: "10K+", label: "Active Users", icon: <FaUsers />, color: "text-primary" },
-        { number: "5K+", label: "Companies", icon: <FaBuilding />, color: "text-secondary" },
-        { number: "25K+", label: "Jobs Posted", icon: <FaBriefcase />, color: "text-accent" },
-        { number: "150+", label: "Countries", icon: <FaGlobe />, color: "text-warning" },
+        {
+            number: "10K+",
+            label: "Active Users",
+            icon: <FaUsers />,
+            color: "text-primary",
+            counter: userCounter
+        },
+        {
+            number: "5K+",
+            label: "Companies",
+            icon: <FaBuilding />,
+            color: "text-secondary",
+            counter: companyCounter
+        },
+        {
+            number: "25K+",
+            label: "Jobs Posted",
+            icon: <FaBriefcase />,
+            color: "text-accent",
+            counter: jobCounter
+        },
+        {
+            number: "150+",
+            label: "Countries",
+            icon: <FaGlobe />,
+            color: "text-warning",
+            counter: countryCounter
+        },
     ];
 
     const values = [
@@ -195,7 +289,6 @@ const About = () => {
         { year: "2023", title: "25K Jobs", description: "Reached 25,000+ jobs posted on our platform." },
     ];
 
-    // ===== TESTIMONIALS DATA =====
     const testimonials = [
         {
             id: 1,
@@ -244,10 +337,41 @@ const About = () => {
         },
     ];
 
+    // ===== ইমেজ লোড এরর হ্যান্ডলিং =====
+    const handleImageError = (e) => {
+        e.target.src = 'https://ui-avatars.com/api/?name=User&background=random&color=fff&size=100';
+    };
+
+    // ===== সোশ্যাল শেয়ার ফাংশন =====
+    const shareOnSocial = (platform) => {
+        const url = window.location.href;
+        const text = "Check out CareerCode - The best platform for finding your dream job!";
+        let shareUrl = '';
+
+        switch (platform) {
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                break;
+            case 'twitter':
+                shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+                break;
+            case 'linkedin':
+                shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+                break;
+            case 'whatsapp':
+                shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + url)}`;
+                break;
+            default:
+                return;
+        }
+
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+    };
+
     return (
         <motion.div
             ref={sectionRef}
-            className="min-h-screen bg-linear-to-b from-base-100 via-base-200/20 to-base-100"
+            className="min-h-screen bg-base-100 dark:bg-base-900 transition-colors duration-300"
             variants={sectionVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
@@ -257,10 +381,10 @@ const About = () => {
                 variants={heroVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                className="relative overflow-hidden py-20 px-5 bg-linear-to-br"
+                className="relative overflow-hidden py-20 px-5 bg-base-200/30 dark:bg-base-800/30 backdrop-blur-sm"
             >
-                <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-                <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+                <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" />
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl animate-pulse delay-1000" />
 
                 <div className="relative max-w-4xl mx-auto text-center">
                     <motion.div
@@ -269,7 +393,7 @@ const About = () => {
                         transition={{ delay: 0.2, duration: 0.5 }}
                         className="inline-block mb-6"
                     >
-                        <span className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                        <span className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold border border-primary/20 dark:bg-primary/20">
                             About Us
                         </span>
                     </motion.div>
@@ -282,7 +406,7 @@ const About = () => {
                     >
                         Connecting Talent with
                         <br />
-                        <span className="bg-linear-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                             Opportunity
                         </span>
                     </motion.h1>
@@ -305,9 +429,10 @@ const About = () => {
                     >
                         <Link to="/jobs">
                             <motion.button
-                                whileHover={{ scale: 1.05 }}
+                                whileHover={{ scale: 1.05, boxShadow: "0 20px 25px -5px rgba(0,0,0,0.1)" }}
                                 whileTap={{ scale: 0.95 }}
                                 className="btn btn-primary rounded-xl px-8 shadow-lg shadow-primary/20 gap-2"
+                                aria-label="Browse available jobs"
                             >
                                 Browse Jobs
                                 <FaArrowRight />
@@ -318,10 +443,49 @@ const About = () => {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 className="btn btn-outline btn-primary rounded-xl px-8"
+                                aria-label="Contact us for support"
                             >
                                 Contact Us
                             </motion.button>
                         </Link>
+                    </motion.div>
+
+                    {/* ===== সোশ্যাল শেয়ার বাটন ===== */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                        transition={{ delay: 0.6 }}
+                        className="flex flex-wrap justify-center gap-2 mt-6"
+                    >
+                        <span className="text-sm text-base-content/50 flex items-center mr-2">Share:</span>
+                        <button
+                            onClick={() => shareOnSocial('facebook')}
+                            className="p-2 rounded-full bg-base-200/50 hover:bg-primary/10 hover:text-primary transition-colors"
+                            aria-label="Share on Facebook"
+                        >
+                            <FaFacebook className="w-4 h-4" />
+                        </button>
+                        <button
+                            onClick={() => shareOnSocial('twitter')}
+                            className="p-2 rounded-full bg-base-200/50 hover:bg-primary/10 hover:text-primary transition-colors"
+                            aria-label="Share on Twitter"
+                        >
+                            <FaTwitter className="w-4 h-4" />
+                        </button>
+                        <button
+                            onClick={() => shareOnSocial('linkedin')}
+                            className="p-2 rounded-full bg-base-200/50 hover:bg-primary/10 hover:text-primary transition-colors"
+                            aria-label="Share on LinkedIn"
+                        >
+                            <FaLinkedinIn className="w-4 h-4" />
+                        </button>
+                        <button
+                            onClick={() => shareOnSocial('whatsapp')}
+                            className="p-2 rounded-full bg-base-200/50 hover:bg-primary/10 hover:text-primary transition-colors"
+                            aria-label="Share on WhatsApp"
+                        >
+                            <FaWhatsapp className="w-4 h-4" />
+                        </button>
                     </motion.div>
                 </div>
             </motion.section>
@@ -341,20 +505,26 @@ const About = () => {
                             whileHover={{
                                 y: -8,
                                 scale: 1.02,
+                                transition: { duration: 0.25 },
                             }}
-                            className="bg-base-100 rounded-2xl p-6 text-center shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50 group cursor-pointer"
+                            className="bg-base-100 dark:bg-base-800 rounded-2xl p-6 text-center shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50 dark:border-base-700/50 group cursor-pointer"
                         >
                             <div className={`text-3xl ${stat.color} group-hover:scale-110 transition-transform inline-block`}>
                                 {stat.icon}
                             </div>
-                            <motion.h3
-                                initial={{ opacity: 0, scale: 0.5 }}
-                                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
-                                transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
-                                className="text-3xl font-extrabold mt-2"
-                            >
-                                {stat.number}
-                            </motion.h3>
+                            <Suspense fallback={<SkeletonLoader />}>
+                                <motion.h3
+                                    ref={stat.counter.ref}
+                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                                    transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+                                    className="text-3xl font-extrabold mt-2"
+                                >
+                                    {stat.counter.isVisible ? stat.counter.count : 0}
+                                    {stat.number.includes('K') && 'K+'}
+                                    {stat.number.includes('+') && !stat.number.includes('K') && '+'}
+                                </motion.h3>
+                            </Suspense>
                             <p className="text-sm text-base-content/50 mt-1">{stat.label}</p>
                         </motion.div>
                     ))}
@@ -371,7 +541,8 @@ const About = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <motion.div
                         variants={itemVariants}
-                        className="p-8 rounded-3xl bg-linear-to-br from-primary/10 to-secondary/10 border border-primary/10"
+                        whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                        className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/10 dark:from-primary/5 dark:to-secondary/5"
                     >
                         <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
                             <FaRocket className="text-2xl text-primary" />
@@ -386,7 +557,8 @@ const About = () => {
 
                     <motion.div
                         variants={itemVariants}
-                        className="p-8 rounded-3xl bg-linear-to-br from-secondary/10 to-accent/10 border border-secondary/10"
+                        whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                        className="p-8 rounded-3xl bg-gradient-to-br from-secondary/10 to-accent/10 border border-secondary/10 dark:from-secondary/5 dark:to-accent/5"
                     >
                         <div className="w-14 h-14 rounded-2xl bg-secondary/20 flex items-center justify-center mb-4">
                             <FaGlobe className="text-2xl text-secondary" />
@@ -406,7 +578,7 @@ const About = () => {
                 variants={containerVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                className="max-w-7xl mx-auto px-5 py-16 bg-base-200/30 rounded-3xl"
+                className="max-w-7xl mx-auto px-5 py-16 bg-base-200/30 dark:bg-base-800/30 rounded-3xl"
             >
                 <div className="text-center mb-12">
                     <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold">
@@ -425,10 +597,13 @@ const About = () => {
                             whileHover={{
                                 y: -8,
                                 transition: { duration: 0.25 },
+                                boxShadow: "0 20px 25px -5px rgba(0,0,0,0.1)",
                             }}
-                            className="group p-6 rounded-2xl bg-base-100 shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50 hover:border-transparent relative overflow-hidden"
+                            className="group p-6 rounded-2xl bg-base-100 dark:bg-base-800 shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50 dark:border-base-700/50 hover:border-transparent relative overflow-hidden"
+                            role="article"
+                            aria-label={`Value: ${value.title}`}
                         >
-                            <div className={`absolute top-0 left-0 right-0 h-1 bg-linear-to-r ${value.color} group-hover:h-1.5 transition-all duration-300`} />
+                            <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${value.color} group-hover:h-1.5 transition-all duration-300`} />
                             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
                                 {value.icon}
                             </div>
@@ -460,7 +635,7 @@ const About = () => {
                 </div>
 
                 <div className="relative">
-                    <div className="absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-base-300/50 hidden md:block" />
+                    <div className="absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-base-300/50 dark:bg-base-700/50 hidden md:block" />
 
                     <div className="space-y-8">
                         {milestones.map((milestone, index) => (
@@ -470,17 +645,24 @@ const About = () => {
                                 className={`flex flex-col md:flex-row items-center gap-6 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
                             >
                                 <div className={`flex-1 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                                    <div className="bg-base-100 p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50">
+                                    <motion.div
+                                        whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+                                        className="bg-base-100 dark:bg-base-800 p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50 dark:border-base-700/50"
+                                    >
                                         <span className="text-sm font-bold text-primary">{milestone.year}</span>
                                         <h4 className="font-bold text-lg mt-1">{milestone.title}</h4>
                                         <p className="text-sm text-base-content/60 mt-1">{milestone.description}</p>
-                                    </div>
+                                    </motion.div>
                                 </div>
 
                                 <div className="relative z-10 flex items-center justify-center">
-                                    <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20">
+                                    <motion.div
+                                        whileHover={{ scale: 1.2, rotate: 360 }}
+                                        transition={{ duration: 0.5 }}
+                                        className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20"
+                                    >
                                         {index + 1}
-                                    </div>
+                                    </motion.div>
                                 </div>
 
                                 <div className="flex-1 hidden md:block" />
@@ -490,7 +672,7 @@ const About = () => {
                 </div>
             </motion.section>
 
-            {/* ===== TESTIMONIALS WITH SWIPER CAROUSEL ===== */}
+            {/* ===== TESTIMONIALS ===== */}
             <motion.section
                 variants={containerVariants}
                 initial="hidden"
@@ -545,35 +727,33 @@ const About = () => {
                     >
                         {testimonials.map((testimonial) => (
                             <SwiperSlide key={testimonial.id}>
-                                <div className="bg-base-100 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50 h-full group">
-                                    {/* Rating Stars */}
+                                <motion.div
+                                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                                    className="bg-base-100 dark:bg-base-800 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50 dark:border-base-700/50 h-full group"
+                                >
                                     <div className="flex gap-0.5 mb-3">
                                         {[...Array(5)].map((_, i) => (
                                             <FaStar
                                                 key={i}
                                                 className={`${i < testimonial.rating
                                                     ? "text-yellow-400 fill-current"
-                                                    : "text-base-300"
+                                                    : "text-base-300 dark:text-base-600"
                                                     } text-sm`}
                                             />
                                         ))}
                                     </div>
-
-                                    {/* Quote Icon */}
                                     <FaQuoteLeft className="text-primary/10 text-2xl mb-2" />
-
-                                    {/* Text */}
                                     <p className="text-sm text-base-content/70 leading-relaxed line-clamp-4">
                                         "{testimonial.text}"
                                     </p>
-
-                                    {/* Author Info */}
-                                    <div className="flex items-center gap-3 mt-4 pt-4 border-t border-base-200/50">
+                                    <div className="flex items-center gap-3 mt-4 pt-4 border-t border-base-200/50 dark:border-base-700/50">
                                         <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20 flex-shrink-0">
                                             <img
                                                 src={testimonial.avatar}
-                                                alt={testimonial.name}
+                                                alt={`${testimonial.name}'s avatar`}
                                                 className="w-full h-full object-cover"
+                                                loading="lazy"
+                                                onError={handleImageError}
                                             />
                                         </div>
                                         <div className="flex-1 min-w-0">
@@ -585,14 +765,14 @@ const About = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
                             </SwiperSlide>
                         ))}
                     </Swiper>
 
-                    {/* Custom Navigation Arrows */}
                     <button
-                        className="swiper-button-prev-custom absolute -left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-base-100 shadow-xl hover:bg-primary hover:text-white transition-all duration-300 flex items-center justify-center z-20 border border-base-200/50 hover:border-primary"
+                        className="swiper-button-prev-custom absolute -left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-base-100 dark:bg-base-800 shadow-xl hover:bg-primary hover:text-white transition-all duration-300 flex items-center justify-center z-20 border border-base-200/50 dark:border-base-700/50 hover:border-primary"
+                        aria-label="Previous testimonial"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -600,14 +780,14 @@ const About = () => {
                     </button>
 
                     <button
-                        className="swiper-button-next-custom absolute -right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-base-100 shadow-xl hover:bg-primary hover:text-white transition-all duration-300 flex items-center justify-center z-20 border border-base-200/50 hover:border-primary"
+                        className="swiper-button-next-custom absolute -right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-base-100 dark:bg-base-800 shadow-xl hover:bg-primary hover:text-white transition-all duration-300 flex items-center justify-center z-20 border border-base-200/50 dark:border-base-700/50 hover:border-primary"
+                        aria-label="Next testimonial"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                     </button>
 
-                    {/* Custom Pagination Dots */}
                     <div className="swiper-pagination-custom flex justify-center gap-2 mt-6" />
                 </div>
             </motion.section>
@@ -633,14 +813,22 @@ const About = () => {
                         <motion.div
                             key={index}
                             variants={itemVariants}
-                            whileHover={{ y: -8 }}
-                            className="bg-base-100 rounded-2xl p-6 text-center shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50 group"
+                            whileHover={{
+                                y: -8,
+                                transition: { duration: 0.25 },
+                                boxShadow: "0 20px 25px -5px rgba(0,0,0,0.1)",
+                            }}
+                            className="bg-base-100 dark:bg-base-800 rounded-2xl p-6 text-center shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50 dark:border-base-700/50 group"
+                            role="article"
+                            aria-label={`Team member: ${member.name}`}
                         >
                             <div className="w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-primary/20 group-hover:border-primary/40 transition-colors">
                                 <img
                                     src={member.avatar}
-                                    alt={member.name}
+                                    alt={`${member.name}'s profile photo`}
                                     className="w-full h-full object-cover"
+                                    loading="lazy"
+                                    onError={handleImageError}
                                 />
                             </div>
                             <h3 className="font-bold mt-4 group-hover:text-primary transition-colors">
@@ -651,10 +839,22 @@ const About = () => {
                                 {member.bio}
                             </p>
                             <div className="flex justify-center gap-2 mt-3">
-                                <a href={member.social.linkedin} className="w-8 h-8 rounded-lg bg-base-200 flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-colors">
+                                <a
+                                    href={member.social.linkedin}
+                                    className="w-8 h-8 rounded-lg bg-base-200 dark:bg-base-700 flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-colors"
+                                    aria-label={`${member.name}'s LinkedIn`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
                                     <FaLinkedinIn className="text-xs" />
                                 </a>
-                                <a href={member.social.twitter} className="w-8 h-8 rounded-lg bg-base-200 flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-colors">
+                                <a
+                                    href={member.social.twitter}
+                                    className="w-8 h-8 rounded-lg bg-base-200 dark:bg-base-700 flex items-center justify-center hover:bg-primary/10 hover:text-primary transition-colors"
+                                    aria-label={`${member.name}'s Twitter`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
                                     <FaTwitter className="text-xs" />
                                 </a>
                             </div>
@@ -672,10 +872,11 @@ const About = () => {
             >
                 <motion.div
                     variants={itemVariants}
-                    className="relative overflow-hidden rounded-3xl bg-linear-to-r from-primary via-secondary to-accent p-10 text-center text-white"
+                    whileHover={{ scale: 1.01, transition: { duration: 0.3 } }}
+                    className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-secondary to-accent p-10 text-center text-white"
                 >
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse" />
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse delay-1000" />
 
                     <div className="relative">
                         <h2 className="text-3xl md:text-4xl font-bold">
@@ -687,9 +888,10 @@ const About = () => {
                         <div className="flex flex-wrap justify-center gap-4 mt-6">
                             <Link to="/jobs">
                                 <motion.button
-                                    whileHover={{ scale: 1.05 }}
+                                    whileHover={{ scale: 1.05, boxShadow: "0 20px 25px -5px rgba(0,0,0,0.2)" }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="btn btn-white text-primary rounded-xl px-8 gap-2"
+                                    className="btn bg-white text-primary hover:bg-white/90 rounded-xl px-8 gap-2 border-0"
+                                    aria-label="Browse available jobs"
                                 >
                                     Find a Job
                                     <FaArrowRight />
@@ -700,6 +902,7 @@ const About = () => {
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     className="btn btn-ghost border-2 border-white/30 text-white rounded-xl px-8 hover:bg-white/10"
+                                    aria-label="Post a new job"
                                 >
                                     Post a Job
                                 </motion.button>

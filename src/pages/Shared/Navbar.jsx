@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, NavLink, useNavigate, useLocation } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useEffect } from "react";
-import { 
-    User, Settings, LayoutDashboard, LogOut, 
-    CreditCard, Bell, Shield, HelpCircle, 
+import {
+    User, Settings, LayoutDashboard, LogOut,
+    CreditCard, Bell, Shield, HelpCircle,
     ChevronDown, Sparkles, Crown, Zap,
     Briefcase, FileText, Calendar, Users,
     Gift, Star, Award, Menu, X
@@ -79,7 +79,8 @@ const Navbar = () => {
         { path: "/", label: "Home" },
         { path: "/about", label: "About" },
         ...(user ? [{ path: "/myApplications", label: "Application List" }] : []),
-        ...(user && user?.role === 'recruiter' ? [{ path: "/addJob", label: "Add Job" }] : []),
+        ...(user ? [{ path: "/myPostedJobs", label: "My Posted Jobs" }] : []),
+        ...(user ? [{ path: "/addJob", label: "Add Job" }] : []),
         {
             path: "/#top-companies",
             label: "Top Companies",
@@ -112,10 +113,9 @@ const Navbar = () => {
                             to={item.path}
                             onClick={() => setIsMobileMenuOpen(false)}
                             className={({ isActive }) =>
-                                `font-medium transition-all duration-300 block px-4 py-2 rounded-lg ${
-                                    isActive
-                                        ? "text-primary bg-primary/10"
-                                        : "hover:text-primary hover:bg-primary/5"
+                                `font-medium transition-all duration-300 block px-4 py-2 rounded-lg ${isActive
+                                    ? "text-primary bg-primary/10"
+                                    : "hover:text-primary hover:bg-primary/5"
                                 }`
                             }
                         >
@@ -128,9 +128,8 @@ const Navbar = () => {
     );
 
     return (
-        <div className={`sticky top-0 z-50 px-3 md:px-6 pt-3 transition-all duration-300 ${
-            scrolled ? 'backdrop-blur-xl bg-base-100/80' : ''
-        }`}>
+        <div className={`sticky top-0 z-50 px-3 md:px-6 pt-3 transition-all duration-300 ${scrolled ? 'backdrop-blur-xl bg-base-100/80' : ''
+            }`}>
             <div className="navbar max-w-7xl mx-auto bg-base-100/90 backdrop-blur-xl shadow-lg border border-base-200 rounded-2xl px-4 md:px-6">
                 {/* Navbar Start */}
                 <div className="navbar-start">
