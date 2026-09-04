@@ -1,11 +1,99 @@
 import React, { use } from 'react';
+import { motion } from "framer-motion"
+import { FaBriefcase, FaCheckCircle, FaEye, FaUsers } from 'react-icons/fa';
 
 const MyJobList = ({ myPostedJobsPromise }) => {
     const jobs = use(myPostedJobsPromise);
     console.log(jobs);
+
+
+    const stats = [
+        {
+            label: "Total Jobs",
+            value: `${jobs.length}`,
+            icon: <FaBriefcase />,
+            color: "text-primary",
+            bgColor: "bg-primary/10",
+            progressColor: "bg-primary",
+            change: `${jobs.length}`,
+            progress: 75,
+        },
+        {
+            label: "Active Jobs",
+            value: `${jobs.length}`,
+            icon: <FaCheckCircle />,
+            color: "text-success",
+            bgColor: "bg-success/10",
+            progressColor: "bg-success",
+            change: `${jobs.length}`,
+            progress: 65,
+        },
+        {
+            label: "Total Applicants",
+            value: `${jobs.length}`,
+            icon: <FaUsers />,
+            color: "text-secondary",
+            bgColor: "bg-secondary/10",
+            progressColor: "bg-secondary",
+            change: `${jobs.length}`,
+            progress: 82,
+        },
+        {
+            label: "Views",
+            value: `${jobs.length}`,
+            icon: <FaEye />,
+            color: "text-accent",
+            bgColor: "bg-accent/10",
+            progressColor: "bg-accent",
+            change: `${jobs.length}`,
+            progress: 90,
+        },
+    ];
+
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.4,
+                ease: "easeOut",
+            },
+        },
+    };
+
     return (
         <div>
-            <h2>jobs created by you: {jobs.length}</h2>
+            <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-2 gap-4 mb-8">
+                {stats.map((stat, index) => (
+                    <motion.div key={index} variants={itemVariants} whileHover={{ y: -4, scale: 1.02 }} className="bg-base-100 rounded-2xl p-5 shadow-sm hover:shadow-2xl transition-all duration-300 border border-base-200/50">
+                        <div className="flex items-start justify-between">
+                            <div className={`w-10 h-10 rounded-xl ${stat.bgColor} flex items-center justify-center text-xl`}>
+                                <span className={stat.color}>{stat.icon}</span>
+                            </div>
+                            <span className="text-xs text-success font-medium bg-success/10 px-2 py-1 rounded-full">{stat.change}</span>
+                        </div>
+                        <h3 className="text-2xl font-extrabold mt-3">{stat.value}</h3>
+                        <p className="text-sm text-base-content/50">{stat.label}</p>
+
+                        {/* progress */}
+                        <div className="mt-4">
+
+                            <div className="flex items-center justify-between mb-1">
+                                <span className="text-xs text-base-content/50">Progress</span>
+                                <span className={`text-xs font-semibold ${stat.color}`}>{stat.progress}%</span>
+                            </div>
+
+                            <div className="w-full h-2 bg-base-200 rounded-full overflow-hidden">
+                                <motion.div initial={{ width: 0 }} animate={{ width: `${stat.progress}%` }} transition={{ duration: 1, delay: index * 0.15 }} className={`h-full rounded-full ${stat.progressColor}`}>
+
+                                </motion.div>
+                            </div>
+                        </div>
+                    </motion.div>
+                ))}
+            </motion.div>
         </div>
     );
 };
