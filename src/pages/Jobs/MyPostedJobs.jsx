@@ -116,8 +116,30 @@ const MyPostedJobs = () => {
                         </button>
                     </div>
                 </motion.div>
-            </div>
 
+                {/* Quick Actions */}
+                <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <Link to="/addJob">
+                        <div className="p-5 rounded-2xl bg-linear-to-br from-primary/10 to-primary/5 border border-primary/20 hover:shadow-lg transition-all cursor-pointer group">
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary text-xl group-hover:scale-110 transition-transform">
+                                    <FaPlus></FaPlus>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-bold">Post New Job</h4>
+                                    <p className="text-xs text-base-content/50">Create a new job posting</p>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link>
+                    </Link>
+
+                    <Link></Link>
+                </motion.div>
+            </div>
         </motion.div>
     );
 };
