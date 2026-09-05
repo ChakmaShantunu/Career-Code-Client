@@ -1,6 +1,8 @@
 import React, { use } from 'react';
 import { motion } from "framer-motion"
-import { FaBriefcase, FaCheckCircle, FaEye, FaUsers } from 'react-icons/fa';
+import { FaBriefcase, FaCheckCircle, FaEye, FaPlus, FaUsers } from 'react-icons/fa';
+import { div } from 'motion/react-client';
+import { Link } from 'react-router';
 
 const MyJobList = ({ myPostedJobsPromise, searchTerm, filterStatus }) => {
     const jobs = use(myPostedJobsPromise);
@@ -69,6 +71,19 @@ const MyJobList = ({ myPostedJobsPromise, searchTerm, filterStatus }) => {
             },
         },
     };
+
+    if (filterdJobs.length === 0) {
+        return (
+            <div className='text-center py-20'>
+                <span className='text-6xl block mb-4'>🔍</span>
+                <h3 className='text-xl font-bold'>No Jobs Found</h3>
+                <p className='text-base-content/50 mt-2'>{searchTerm || filterStatus !== "all" ? "Try adjusting your search or filter" : "You haven't posted any jobs yet"}</p>
+                <Link to="/addJob">
+                    <button className='btn btn-primary rounded-xl mt-4'><FaPlus></FaPlus> Post Your First Job</button>
+                </Link>
+            </div>
+        );
+    }
 
     return (
         <div>
