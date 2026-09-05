@@ -2,9 +2,16 @@ import React, { use } from 'react';
 import { motion } from "framer-motion"
 import { FaBriefcase, FaCheckCircle, FaEye, FaUsers } from 'react-icons/fa';
 
-const MyJobList = ({ myPostedJobsPromise }) => {
+const MyJobList = ({ myPostedJobsPromise, searchTerm, filterStatus }) => {
     const jobs = use(myPostedJobsPromise);
-    console.log(jobs);
+
+    const filterdJobs = jobs.filter(job => {
+        const matchesSearch = job.title.toLowerCase().includes(searchTerm?.toLowerCase() || "") || job.company.toLowerCase().includes(searchTerm?.toLowerCase() || "") || job.location.toLowerCase().includes(searchTerm?.toLowerCase() || "");
+
+        const matchesStatus = filterStatus === "all" || jobs.status === filterStatus;
+
+        return matchesSearch && matchesStatus
+    });
 
 
     const stats = [
@@ -94,6 +101,10 @@ const MyJobList = ({ myPostedJobsPromise }) => {
                     </motion.div>
                 ))}
             </motion.div>
+
+            <div className='space-y-4'>
+
+            </div>
         </div>
     );
 };

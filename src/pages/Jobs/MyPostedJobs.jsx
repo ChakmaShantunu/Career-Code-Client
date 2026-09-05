@@ -89,7 +89,7 @@ const MyPostedJobs = () => {
                     <Suspense fallback={
                         <Loading text="Loading Posted Jobs List"></Loading>
                     }>
-                        <MyJobList myPostedJobsPromise={myPostedJobsPromise(user?.email)}></MyJobList>
+                        <MyJobList myPostedJobsPromise={myPostedJobsPromise(user?.email)} searchTerm={searchTerm} filterStatus={filterStatus}></MyJobList>
                     </Suspense>
                 </motion.div>
 
