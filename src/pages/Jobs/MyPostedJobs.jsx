@@ -5,7 +5,7 @@ import { myPostedJobsPromise } from "../../api/jobsApi";
 import Loading from "../../components/Loading";
 import { motion, useInView } from "framer-motion"
 import { Link } from "react-router";
-import { FaBriefcase, FaFilter, FaPlus, FaSearch, FaUsers, } from "react-icons/fa";
+import { FaBriefcase, FaChartLine, FaFilter, FaPlus, FaSearch, FaUsers, } from "react-icons/fa";
 
 
 const MyPostedJobs = () => {
@@ -149,7 +149,20 @@ const MyPostedJobs = () => {
                         </div>
                     </Link>
 
-                    <Link></Link>
+                    <Link to="/analytics">
+                        <div className="p-5 rounded-2xl bg-linear-to-br from-primary/10 to-primary/5 border border-primary/20 hover:shadow-lg transition-all cursor-pointer group">
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary text-xl group-hover:scale-110 transition-transform">
+                                    <FaChartLine></FaChartLine>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-bold">Analytics</h4>
+                                    <p className="text-xs text-base-content/50">View job performance</p>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
                 </motion.div>
             </div>
         </motion.div>
