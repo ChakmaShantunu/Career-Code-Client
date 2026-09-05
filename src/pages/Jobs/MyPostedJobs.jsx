@@ -1,11 +1,11 @@
-import { Suspense, useRef } from "react";
+import { Suspense, useRef, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import MyJobList from "./MyJobList";
 import { myPostedJobsPromise } from "../../api/jobsApi";
 import Loading from "../../components/Loading";
 import { motion, useInView } from "framer-motion"
 import { Link } from "react-router";
-import { FaBriefcase, FaPlus, } from "react-icons/fa";
+import { FaBriefcase, FaFilter, FaPlus, FaSearch, } from "react-icons/fa";
 
 
 const MyPostedJobs = () => {
@@ -17,6 +17,9 @@ const MyPostedJobs = () => {
         amount: 0.1,
         margin: "0px 0px -100px 0px"
     });
+
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filterStatus, setFilterStatus] = useState("all");
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -88,6 +91,30 @@ const MyPostedJobs = () => {
                     }>
                         <MyJobList myPostedJobsPromise={myPostedJobsPromise(user?.email)}></MyJobList>
                     </Suspense>
+                </motion.div>
+
+                {/* Filters */}
+                <motion.div variants={itemVariants} className="flex flex-col gap-4 mb-6 sm:flex-row">
+                    <div className="flex-1 relative">
+                        <div className="absolute left-0 pl-3 inset-y-0 flex items-center pointer-events-none">
+                            <FaSearch className="text-base-content/40"></FaSearch>
+                        </div>
+                        <input type="text" placeholder="Search by job title, company..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-10 pr-4 py-3 rounded-xl border border-base-300 bg-base-100/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" />
+                    </div>
+
+                    <div className="flex gap-3">
+                        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-4 py-3 rounded-xl border border-base-300 bg-base-100/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-lg focus:border-primary/20 focus:ring-2 focus:ring-primary/20 transition-all outline-none min-w-35 hover:bg-base-100/80 hover:border-primary/30 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+                            <option value="all">All Status</option>
+                            <option value="active">✅ Active</option>
+                            <option value="inactive">⏸️ Inactive</option>
+                            <option value="closed">🔒 Closed</option>
+                        </select>
+
+                        <button className="btn btn-ghost rounded-xl gap-2">
+                            <FaFilter></FaFilter>
+                            Filter
+                        </button>
+                    </div>
                 </motion.div>
             </div>
 
