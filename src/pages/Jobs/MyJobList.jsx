@@ -1,6 +1,6 @@
 import React, { use } from 'react';
 import { delay, motion } from "framer-motion"
-import { FaBriefcase, FaCheckCircle, FaClock, FaEye, FaPlus, FaTimesCircle, FaUsers } from 'react-icons/fa';
+import { FaBriefcase, FaCheckCircle, FaClock, FaEdit, FaEye, FaPlus, FaTimesCircle, FaTrash, FaUsers } from 'react-icons/fa';
 import { div } from 'motion/react-client';
 import { Link } from 'react-router';
 
@@ -36,6 +36,10 @@ const MyJobList = ({ myPostedJobsPromise, searchTerm, filterStatus }) => {
                 </span>;
 
         }
+    };
+
+    const handleDelete = (id, title) => {
+        console.log('job delted');
     }
 
 
@@ -175,9 +179,21 @@ const MyJobList = ({ myPostedJobsPromise, searchTerm, filterStatus }) => {
                                         </div>
                                     </div>
                                 </div>
+
                                 {/* Right Section */}
                                 <div className='flex items-center gap-2 md:gap-3'>
-
+                                    <Link to={`/jobs/${job._id}`}>
+                                        <button className='w-9 h-9 rounded-xl hover:bg-primary/10 text-primary transition-colors flex items-center justify-center' title='View'><FaEye></FaEye></button>
+                                    </Link>
+                                    <Link to={`/edit-jobs/${job._id}`}>
+                                        <button className='w-9 h-9 rounded-xl hover:bg-primary/10 text-primary transition-colors flex items-center justify-center' title='Edit'><FaEdit></FaEdit></button>
+                                    </Link>
+                                    <button onClick={() => handleDelete(job._id, job.title)} className='w-9 h-9 rounded-xl hover:bg-primary/10 text-primary transition-colors flex items-center justify-center' title='Delete'>
+                                        <FaTrash></FaTrash>
+                                    </button>
+                                    <Link to={`/applications?jobId=${job._id}`}>
+                                        <button className='w-9 h-9 rounded-xl hover:bg-primary/10 text-primary transition-colors flex items-center justify-center' title='Applications'><FaUsers></FaUsers></button>
+                                    </Link>
                                 </div>
                             </div>
 
