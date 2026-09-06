@@ -1,6 +1,6 @@
 import React, { use } from 'react';
-import { motion } from "framer-motion"
-import { FaBriefcase, FaCheckCircle, FaEye, FaPlus, FaUsers } from 'react-icons/fa';
+import { delay, motion } from "framer-motion"
+import { FaBriefcase, FaCheckCircle, FaClock, FaEye, FaPlus, FaTimesCircle, FaUsers } from 'react-icons/fa';
 import { div } from 'motion/react-client';
 import { Link } from 'react-router';
 
@@ -14,6 +14,29 @@ const MyJobList = ({ myPostedJobsPromise, searchTerm, filterStatus }) => {
 
         return matchesSearch && matchesStatus
     });
+
+    const getStatusBadge = (status) => {
+        switch (status) {
+            case "active":
+                return <span className='badge badge-success gap-1'>
+                    <FaCheckCircle></FaCheckCircle> Active
+                </span>;
+
+            case "inactive":
+                return <span className='badge badge-warning gap-1'>
+                    <FaClock></FaClock> Inactive
+                </span>;
+            case "closed":
+                return <span className='badge badge-error gap-1'>
+                    <FaTimesCircle></FaTimesCircle> Active
+                </span>;
+            default:
+                return <span className='badge badge-ghost gap-1'>
+                    {status}
+                </span>;
+
+        }
+    }
 
 
     const stats = [
@@ -118,9 +141,53 @@ const MyJobList = ({ myPostedJobsPromise, searchTerm, filterStatus }) => {
             </motion.div>
 
             <div className='space-y-4'>
+                {
+                    filterdJobs.map((job, index) => (
+                        <motion.div key={job._id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.5 }} variants={itemVariants} className='bg-base-100 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-base-200/50 hover:border-primary/20'>
 
+                            <div className='flex flex-col md:flex-row justify-between gap-4'>
+                                {/* Left section */}
+                                <div className='flex-1'>
+                                    <div className='flex items-start gap-4'>
+                                        {/* Logo */}
+                                        <div className='w-14 h-14 rounded-xl bg-base-200 flex items-center justify-center overflow-hidden shrink-0'>
+                                            {
+                                                job.company_logo ? (
+                                                    <img src={job.company_logo} alt={job.company} className='w-full h-full object-cover' />
+                                                ) : (
+                                                    <span className='text-2xl font-bold text-primary'>{job.company?.charAt(0)}</span>
+                                                )
+                                            }
+                                        </div>
+
+                                        <div className='flex-1 min-w-0'>
+                                            <div className='flex flex-wrap items-center gap-2'>
+                                                <h3 className='text-lg font-bold group-hover: text-primary transition-colors'>{job.title}</h3>
+                                                {getStatusBadge(job.stats)}
+                                            </div>
+                                            <p className='text-sm text-base-content/60'>{job.company}</p>
+                                            <p className='text-sm text-base-content/50'>{job.location}</p>
+                                            <div className='flex flex-wrap gap-4 mt-2 text-sm text-base-content/50'>
+                                                <span>📅 Deadline: {new Date(job.applicationDeadline).toLocaleDateString()}</span>
+                                                <span>💰 {job.salaryRange?.min} -{job.salaryRange?.max} {job.salaryRange?.currency?.toUpperCase()}</span>
+                                                <span>📋 {job.jobType}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* Right Section */}
+                                <div className='flex items-center gap-2 md:gap-3'>
+
+                                </div>
+                            </div>
+
+                        </motion.div>
+                    ))
+                }
             </div>
-        </div>
+
+            <p className='text-sm text-base-content/50 text-center mt-4'>Showing {filterdJobs.length} of {filterdJobs.length} jobs</p>
+        </div >
     );
 };
 
