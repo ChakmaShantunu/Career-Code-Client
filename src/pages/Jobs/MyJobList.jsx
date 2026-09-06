@@ -1,8 +1,9 @@
 import React, { use } from 'react';
 import { delay, motion } from "framer-motion"
 import { FaBriefcase, FaCheckCircle, FaClock, FaEdit, FaEye, FaPlus, FaTimesCircle, FaTrash, FaUsers } from 'react-icons/fa';
-import { div } from 'motion/react-client';
 import { Link } from 'react-router';
+import Swal from 'sweetalert2';
+import { deleteJob } from '../../api/jobsApi';
 
 const MyJobList = ({ myPostedJobsPromise, searchTerm, filterStatus }) => {
     const jobs = use(myPostedJobsPromise);
@@ -39,7 +40,35 @@ const MyJobList = ({ myPostedJobsPromise, searchTerm, filterStatus }) => {
     };
 
     const handleDelete = (id, title) => {
-        console.log('job delted');
+        Swal.fire({
+            title: "Delete Job?",
+            text: `Are you sure you want to delete "${title}"?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#ef4444",
+            cancelButtonColor: "#6b7280",
+            confirmButtonText: "Yes, delete!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteJob(id)
+                    .then(() => {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Job has been deleted successfully.",
+                            icon: "success",
+                        });
+                        // Refresh the list
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the job.",
+                            icon: "error",
+                        });
+                    });
+            }
+        });
     }
 
 

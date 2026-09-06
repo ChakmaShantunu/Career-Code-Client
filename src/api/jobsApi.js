@@ -11,3 +11,13 @@ export const myPostedJobsPromise = async (email) => {
         throw error
     }
 }
+
+export const deleteJob = async (id) => {
+    try {
+        const response = await axios.delete(`http://localhost:3000/jobs/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error
+    }
+}
