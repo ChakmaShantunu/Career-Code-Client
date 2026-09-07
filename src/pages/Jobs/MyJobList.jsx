@@ -214,7 +214,7 @@ const MyJobList = ({ myPostedJobsPromise, searchTerm, filterStatus }) => {
                                     <Link to={`/jobs/${job._id}`}>
                                         <button className='w-9 h-9 rounded-xl hover:bg-primary/10 text-primary transition-colors flex items-center justify-center' title='View'><FaEye></FaEye></button>
                                     </Link>
-                                    <Link to={`/edit-jobs/${job._id}`}>
+                                    <Link to={`/updateJob/${job._id}`}>
                                         <button className='w-9 h-9 rounded-xl hover:bg-primary/10 text-primary transition-colors flex items-center justify-center' title='Edit'><FaEdit></FaEdit></button>
                                     </Link>
                                     <button onClick={() => handleDelete(job._id, job.title)} className='w-9 h-9 rounded-xl hover:bg-primary/10 text-primary transition-colors flex items-center justify-center' title='Delete'>

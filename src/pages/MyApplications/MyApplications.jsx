@@ -16,7 +16,7 @@ const MyApplications = () => {
         <div>
             <ApplicationStats></ApplicationStats>
             <Suspense fallback={<p className="text-center">Loading applications...</p>}>
-                <ApplicationList myApplicationsPromise={myApplicationsPromise(user.email)}></ApplicationList>
+                <ApplicationList myApplicationsPromise={myApplicationsPromise(user?.email)}></ApplicationList>
             </Suspense>
         </div>
     );
