@@ -1,6 +1,7 @@
 
-import { motion, useInView } from "framer-motion";
+import { color, motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { FaClock, FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 
 
 const Contact = () => {
@@ -48,6 +49,46 @@ const Contact = () => {
         },
     };
 
+    // ===== DATA =====
+    const contactInfo = [
+        {
+            icon: <FaEnvelope />,
+            title: "Email Us",
+            details: "info@careercode.com",
+            subDetails: "support@careercode.com",
+            color: "text-primary",
+            bgColor: "bg-primary/10",
+            hoverColor: "hover:bg-primary/20",
+        },
+        {
+            icon: <FaPhone />,
+            title: "Call Us",
+            details: "+1 (555) 123-4567",
+            subDetails: "+1 (555) 987-6543",
+            color: "text-secondary",
+            bgColor: "bg-secondary/10",
+            hoverColor: "hover:bg-secondary/20",
+        },
+        {
+            icon: <FaMapMarkerAlt />,
+            title: "Visit Us",
+            details: "123 Career Street",
+            subDetails: "Tech City, TC 12345",
+            color: "text-accent",
+            bgColor: "bg-accent/10",
+            hoverColor: "hover:bg-accent/20",
+        },
+        {
+            icon: <FaClock />,
+            title: "Working Hours",
+            details: "Mon - Fri: 9:00 AM - 6:00 PM",
+            subDetails: "Sat - Sun: Closed",
+            color: "text-warning",
+            bgColor: "bg-warning/10",
+            hoverColor: "hover:bg-warning/20",
+        },
+    ];
+
 
     return (
         <motion.div ref={sectionRef} variants={containerVariants} initial='hidden' animate={isInView ? "visible" : "hidden"} className="min-h-screen bg-linear-to-b from-base-100 via-base-200/20 to-base-100 py-8 md:py-16 px-4">
@@ -61,6 +102,18 @@ const Contact = () => {
                     </div>
                     <h1 className="text-3xl md:text-5xl font-extrabold">Get In <span className="text-primary">Touch</span></h1>
                     <p className="text-base-content/60 mt-3 max-w-2xl mx-auto">Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                </motion.div>
+
+                {/* Contact Info Cards */}
+                <motion.div variants={containerVariants} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    {contactInfo.map((info, index) => (
+                        <motion.div key={index} variants={itemVariants} whileHover={{ y: -8, transition: { duration: 0.25 } }} className={`group p-6 rounded-2xl ${info.bgColor} ${info.hoverColor} transition-all duration-300 border border-transparent hover:border-primary/20 cursor-pointer`}>
+                            <div className={`text-3xl ${info.color} group-hover:scale-110 transition-transform`}>{info.icon}</div>
+                            <h3 className="font-bold text-lg mt-3 group-hover:text-primary transition-colors">{info.title}</h3>
+                            <p className="text-sm text-base-content/70">{info.details}</p>
+                            <p className="text-sm text-base-content/50">{info.subDetails}</p>
+                        </motion.div>
+                    ))}
                 </motion.div>
 
             </div>
