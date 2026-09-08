@@ -13,6 +13,7 @@ import {
     FaChartLine,
     FaChartBar
 } from "react-icons/fa";
+import { Link } from "react-router";
 
 const ApplicationStats = () => {
     const sectionRef = useRef(null);
@@ -253,8 +254,8 @@ const ApplicationStats = () => {
                             </div>
 
                             <div className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ${stat.changeType === 'increase'
-                                    ? 'bg-success/10 text-success'
-                                    : 'bg-error/10 text-error'
+                                ? 'bg-success/10 text-success'
+                                : 'bg-error/10 text-error'
                                 }`}>
                                 {stat.changeType === 'increase' ? (
                                     <FaArrowUp className="text-xs" />
@@ -284,7 +285,7 @@ const ApplicationStats = () => {
                                     initial={{ width: 0 }}
                                     animate={isInView ? { width: `${stat.value}%` } : { width: 0 }}
                                     transition={{ duration: 1.5, delay: 0.5 }}
-                                    className="h-full bg-gradient-to-r from-primary to-secondary rounded-full"
+                                    className="h-full bg-linear-to-r from-primary to-secondary rounded-full"
                                 />
                             </div>
                         )}
@@ -318,7 +319,7 @@ const ApplicationStats = () => {
                                 transition={{ delay: 0.3 + index * 0.08 }}
                                 className="flex items-start gap-3 p-3 rounded-xl hover:bg-base-200/50 transition-colors cursor-pointer group"
                             >
-                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-primary font-bold text-sm flex-shrink-0">
+                                <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-primary font-bold text-sm flex-shrink-0">
                                     {activity.user.charAt(0)}
                                 </div>
 
@@ -328,10 +329,10 @@ const ApplicationStats = () => {
                                             {activity.user}
                                         </p>
                                         <span className={`text-xs px-2 py-0.5 rounded-full ${activity.status === 'approved'
-                                                ? 'bg-success/10 text-success'
-                                                : activity.status === 'rejected'
-                                                    ? 'bg-error/10 text-error'
-                                                    : 'bg-warning/10 text-warning'
+                                            ? 'bg-success/10 text-success'
+                                            : activity.status === 'rejected'
+                                                ? 'bg-error/10 text-error'
+                                                : 'bg-warning/10 text-warning'
                                             }`}>
                                             {activity.status}
                                         </span>
@@ -384,16 +385,16 @@ const ApplicationStats = () => {
                         </div>
                     </div>
 
-                    <div className="bg-gradient-to-r from-primary/10 via-secondary/5 to-accent/10 rounded-2xl p-6 border border-primary/10">
+                    <div className="bg-linear-to-r from-primary/10 via-secondary/5 to-accent/10 rounded-2xl p-6 border border-primary/10">
                         <h3 className="text-lg font-bold flex items-center gap-2 mb-3">
                             <span className="text-accent">⚡</span>
                             Quick Actions
                         </h3>
                         <div className="grid grid-cols-2 gap-3">
-                            <button className="p-3 rounded-xl bg-base-100/50 hover:bg-base-100 transition-colors text-sm font-medium">
+                            <Link to="/" className="p-3 rounded-xl bg-base-100/50 hover:bg-base-100 transition-colors text-sm font-medium text-center">
                                 <div className="text-primary text-lg mb-1">📋</div>
                                 View All
-                            </button>
+                            </Link>
                             <button className="p-3 rounded-xl bg-base-100/50 hover:bg-base-100 transition-colors text-sm font-medium">
                                 <div className="text-secondary text-lg mb-1">📊</div>
                                 Reports
@@ -402,10 +403,10 @@ const ApplicationStats = () => {
                                 <div className="text-accent text-lg mb-1">👥</div>
                                 Users
                             </button>
-                            <button className="p-3 rounded-xl bg-base-100/50 hover:bg-base-100 transition-colors text-sm font-medium">
+                            <Link to="/" className="p-3 rounded-xl bg-base-100/50 hover:bg-base-100 transition-colors text-sm font-medium text-center">
                                 <div className="text-info text-lg mb-1">🏢</div>
                                 Companies
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </motion.div>
