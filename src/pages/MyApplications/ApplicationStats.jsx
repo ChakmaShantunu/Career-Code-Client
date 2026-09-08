@@ -391,7 +391,7 @@ const ApplicationStats = () => {
                             Quick Actions
                         </h3>
                         <div className="grid grid-cols-2 gap-3">
-                            <Link to="/" className="p-3 rounded-xl bg-base-100/50 hover:bg-base-100 transition-colors text-sm font-medium text-center">
+                            <Link to="/jobs" className="p-3 rounded-xl bg-base-100/50 hover:bg-base-100 transition-colors text-sm font-medium text-center">
                                 <div className="text-primary text-lg mb-1">📋</div>
                                 View All
                             </Link>

@@ -406,7 +406,7 @@ const About = () => {
                     >
                         Connecting Talent with
                         <br />
-                        <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                        <span className="bg-linear-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                             Opportunity
                         </span>
                     </motion.h1>
@@ -542,7 +542,7 @@ const About = () => {
                     <motion.div
                         variants={itemVariants}
                         whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                        className="p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/10 dark:from-primary/5 dark:to-secondary/5"
+                        className="p-8 rounded-3xl bg-linear-to-br from-primary/10 to-secondary/10 border border-primary/10 dark:from-primary/5 dark:to-secondary/5"
                     >
                         <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
                             <FaRocket className="text-2xl text-primary" />
@@ -558,7 +558,7 @@ const About = () => {
                     <motion.div
                         variants={itemVariants}
                         whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                        className="p-8 rounded-3xl bg-gradient-to-br from-secondary/10 to-accent/10 border border-secondary/10 dark:from-secondary/5 dark:to-accent/5"
+                        className="p-8 rounded-3xl bg-linear-to-br from-secondary/10 to-accent/10 border border-secondary/10 dark:from-secondary/5 dark:to-accent/5"
                     >
                         <div className="w-14 h-14 rounded-2xl bg-secondary/20 flex items-center justify-center mb-4">
                             <FaGlobe className="text-2xl text-secondary" />
@@ -603,7 +603,7 @@ const About = () => {
                             role="article"
                             aria-label={`Value: ${value.title}`}
                         >
-                            <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${value.color} group-hover:h-1.5 transition-all duration-300`} />
+                            <div className={`absolute top-0 left-0 right-0 h-1 bg-linear-to-r ${value.color} group-hover:h-1.5 transition-all duration-300`} />
                             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
                                 {value.icon}
                             </div>
@@ -873,7 +873,7 @@ const About = () => {
                 <motion.div
                     variants={itemVariants}
                     whileHover={{ scale: 1.01, transition: { duration: 0.3 } }}
-                    className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-secondary to-accent p-10 text-center text-white"
+                    className="relative overflow-hidden rounded-3xl bg-linear-to-r from-primary via-secondary to-accent p-10 text-center text-white"
                 >
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse" />
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse delay-1000" />
