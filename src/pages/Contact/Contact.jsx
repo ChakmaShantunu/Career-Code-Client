@@ -1,7 +1,7 @@
 
 import { color, motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { FaClock, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaPhone, FaUser } from "react-icons/fa";
+import { FaArrowRight, FaClock, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaPhone, FaSpinner, FaUser } from "react-icons/fa";
 import { FaSeedling } from "react-icons/fa6";
 
 
@@ -14,6 +14,7 @@ const Contact = () => {
         margin: "0px 0px -100px 0px"
     });
 
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -154,7 +155,7 @@ const Contact = () => {
                                 <div>
                                     <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
                                         <FaUser className="text-primary" />
-                                        Full Name <span className="text-error">*</span>
+                                        Email Address <span className="text-error">*</span>
                                     </label>
                                     <input type="email" name="email" value={formData.name} onChange={handleChange} placeholder="you@example.com" className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-error' : 'border-base-300'} bg-base-100/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none`} />
                                     {errors.email && (
@@ -196,8 +197,20 @@ const Contact = () => {
                             </div>
 
                             {/* Submit */}
-                            <button></button>
-
+                            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" disabled={isLoading} className="relative w-full btn btn-primary h-14 rounded-2xl text-base font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 overflow-hidden group">
+                                {isLoading ? (
+                                    <span className="flex items-center gap-3">
+                                        <FaSpinner className="animate-spin text-lg" />
+                                        Sending...
+                                    </span>
+                                ) : (
+                                    <span className="flex items-center gap-3">
+                                        <FaSeedling />
+                                        Send Message
+                                        <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                                    </span>
+                                )}
+                            </motion.button>
                         </form>
                     </motion.div>
                 </div>
