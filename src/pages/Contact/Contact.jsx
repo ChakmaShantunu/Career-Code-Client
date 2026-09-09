@@ -1,7 +1,7 @@
 
 import { color, motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { FaClock, FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
+import { useRef, useState } from "react";
+import { FaClock, FaEnvelope, FaMapMarkerAlt, FaPhone, FaUser } from "react-icons/fa";
 
 
 const Contact = () => {
@@ -12,6 +12,8 @@ const Contact = () => {
         amount: 0.1,
         margin: "0px 0px -100px 0px"
     });
+
+    const [errors, setErrors] = useState({});
 
     // ===== ANIMATION VARIANTS =====
     const containerVariants = {
@@ -116,6 +118,37 @@ const Contact = () => {
                     ))}
                 </motion.div>
 
+                {/* Contact Form & Map */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <motion.div variants={itemVariants}>
+                        <h2><span>📝</span> Send a Message</h2>
+                        <form>
+                            <div>
+                                <div>
+                                    <label>
+                                        <FaUser className="text-primary" />
+                                        Full Name <span className="text-error">*</span>
+                                    </label>
+                                    <input type="text" />
+                                    {errors.name && (
+                                        <p>{errors.name}</p>
+                                    )}
+                                </div>
+
+                                <div>
+                                    <label>
+                                        <FaUser className="text-primary" />
+                                        Full Name <span className="text-error">*</span>
+                                    </label>
+                                    <input type="email" />
+                                    {errors.email && (
+                                        <p>{errors.email}</p>
+                                    )}
+                                </div>
+                            </div>
+                        </form>
+                    </motion.div>
+                </div>
             </div>
 
         </motion.div>
