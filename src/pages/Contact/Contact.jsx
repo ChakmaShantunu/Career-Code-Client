@@ -13,7 +13,22 @@ const Contact = () => {
         margin: "0px 0px -100px 0px"
     });
 
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        subject: "",
+        message: ""
+    });
+
     const [errors, setErrors] = useState({});
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+        if (errors[name]) {
+            setErrors(prev => ({ ...prev, [name]: "" }));
+        }
+    }
 
     // ===== ANIMATION VARIANTS =====
     const containerVariants = {
@@ -120,27 +135,27 @@ const Contact = () => {
 
                 {/* Contact Form & Map */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <motion.div variants={itemVariants}>
-                        <h2><span>📝</span> Send a Message</h2>
-                        <form>
-                            <div>
+                    <motion.div variants={itemVariants} className="lg:col-span-2 bg-base-100 rounded-3xl shadow-2xl border border-base-200/50 p-6 md:p-8">
+                        <h2 className="text-2xl font-bold mb-6 flex items-center gap-3"><span className="text-primary">📝</span> Send a Message</h2>
+                        <form className="spane-y-5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div>
-                                    <label>
+                                    <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
                                         <FaUser className="text-primary" />
                                         Full Name <span className="text-error">*</span>
                                     </label>
-                                    <input type="text" />
+                                    <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="John Doe" className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-error' : 'border-base-300'} bg-base-100/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none`} />
                                     {errors.name && (
                                         <p>{errors.name}</p>
                                     )}
                                 </div>
 
                                 <div>
-                                    <label>
+                                    <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
                                         <FaUser className="text-primary" />
                                         Full Name <span className="text-error">*</span>
                                     </label>
-                                    <input type="email" />
+                                    <input type="email" name="email" value={formData.name} onChange={handleChange} placeholder="you@example.com" className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-error' : 'border-base-300'} bg-base-100/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none`} />
                                     {errors.email && (
                                         <p>{errors.email}</p>
                                     )}
