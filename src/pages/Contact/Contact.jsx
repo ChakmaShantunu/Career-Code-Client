@@ -1,7 +1,8 @@
 
 import { color, motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { FaClock, FaEnvelope, FaMapMarkerAlt, FaPhone, FaUser } from "react-icons/fa";
+import { FaClock, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaPhone, FaUser } from "react-icons/fa";
+import { FaSeedling } from "react-icons/fa6";
 
 
 const Contact = () => {
@@ -137,7 +138,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <motion.div variants={itemVariants} className="lg:col-span-2 bg-base-100 rounded-3xl shadow-2xl border border-base-200/50 p-6 md:p-8">
                         <h2 className="text-2xl font-bold mb-6 flex items-center gap-3"><span className="text-primary">📝</span> Send a Message</h2>
-                        <form className="spane-y-5">
+                        <form className="space-y-5">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div>
                                     <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
@@ -146,7 +147,7 @@ const Contact = () => {
                                     </label>
                                     <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="John Doe" className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-error' : 'border-base-300'} bg-base-100/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none`} />
                                     {errors.name && (
-                                        <p>{errors.name}</p>
+                                        <p className="text-xs text-error mt-1">{errors.name}</p>
                                     )}
                                 </div>
 
@@ -157,10 +158,46 @@ const Contact = () => {
                                     </label>
                                     <input type="email" name="email" value={formData.name} onChange={handleChange} placeholder="you@example.com" className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-error' : 'border-base-300'} bg-base-100/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none`} />
                                     {errors.email && (
-                                        <p>{errors.email}</p>
+                                        <p className="text-xs text-error mt-1">{errors.email}</p>
                                     )}
                                 </div>
                             </div>
+
+                            {/* subject */}
+                            <div>
+                                <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
+                                    <FaPaperPlane className="text-secondary" />
+                                    Subject <span className="text-error">*</span>
+                                </label>
+                                <input type="email" name="subject" value={formData.subject} onChange={handleChange} placeholder="What is this about?" className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-error' : 'border-base-300'} bg-base-100/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none`} />
+                                {errors.subject && (
+                                    <p className="text-xs text-error mt-1">{errors.subject}</p>
+                                )}
+                            </div>
+
+                            {/* Message */}
+                            <div>
+                                <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
+                                    <FaSeedling className="text-info" />
+                                    Message <span className="text-error">*</span>
+                                </label>
+                                <textarea
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    rows="5"
+                                    placeholder="Write your message here..."
+                                    className={`w-full px-4 py-3 rounded-xl border ${errors.message ? 'border-error' : 'border-base-300'} bg-base-100/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none resize-none`}
+                                />
+                                {errors.message && (
+                                    <p className="text-xs text-error mt-1">{errors.message}</p>
+                                )}
+                                <p className="text-xs text-base-content/40 mt-1 text-right">{formData.message.length}/500 characters</p>
+                            </div>
+
+                            {/* Submit */}
+                            <button></button>
+
                         </form>
                     </motion.div>
                 </div>
