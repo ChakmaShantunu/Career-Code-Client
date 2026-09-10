@@ -1,7 +1,7 @@
 
-import { color, motion, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { FaArrowRight, FaClock, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaPhone, FaSpinner, FaUser } from "react-icons/fa";
+import { FaArrowRight, FaCheckCircle, FaClock, FaEnvelope, FaFacebookF, FaInstagram, FaLinkedinIn, FaMapMarkerAlt, FaPaperPlane, FaPhone, FaSpinner, FaTwitter, FaUser, FaYoutube } from "react-icons/fa";
 import { FaSeedling } from "react-icons/fa6";
 
 
@@ -108,6 +108,16 @@ const Contact = () => {
         },
     ];
 
+    const socialLinks = [
+        { icon: <FaLinkedinIn />, url: "https://linkedin.com", color: "hover:bg-[#0A66C2]" },
+        { icon: <FaTwitter />, url: "https://twitter.com", color: "hover:bg-[#1DA1F2]" },
+        { icon: <FaFacebookF />, url: "https://facebook.com", color: "hover:bg-[#1877F2]" },
+        { icon: <FaInstagram />, url: "https://instagram.com", color: "hover:bg-[#E4405F]" },
+        { icon: <FaYoutube />, url: "https://youtube.com", color: "hover:bg-[#FF0000]" },
+    ];
+
+
+
 
     return (
         <motion.div ref={sectionRef} variants={containerVariants} initial='hidden' animate={isInView ? "visible" : "hidden"} className="min-h-screen bg-linear-to-b from-base-100 via-base-200/20 to-base-100 py-8 md:py-16 px-4">
@@ -137,6 +147,7 @@ const Contact = () => {
 
                 {/* Contact Form & Map */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {/* Form */}
                     <motion.div variants={itemVariants} className="lg:col-span-2 bg-base-100 rounded-3xl shadow-2xl border border-base-200/50 p-6 md:p-8">
                         <h2 className="text-2xl font-bold mb-6 flex items-center gap-3"><span className="text-primary">📝</span> Send a Message</h2>
                         <form className="space-y-5">
@@ -211,11 +222,41 @@ const Contact = () => {
                                     </span>
                                 )}
                             </motion.button>
+
+                            {/* Trust Badge */}
+                            <div className="flex items-center justify-center gap-6 text-xs text-base-content/40 pt-2">
+                                <span className="flex items-center gap-1">
+                                    <FaCheckCircle className="text-success" />
+                                    We'll respond within 24h
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <FaCheckCircle className="text-success" />
+                                    Your data is secure
+                                </span>
+                            </div>
                         </form>
+                    </motion.div>
+
+                    {/* Right Sidebar */}
+                    <motion.div variants={itemVariants} className="space-y-6">
+                        {/* Social Links */}
+                        <div className="bg-base-200 rounded-3xl shadow-2xl border border-base-200/50 p-6">
+                            <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><span className="text-primary">🌐</span>Contact With Us</h3>
+
+                            <div className="flex flex-wrap gap-3">
+                                {socialLinks.map((social, index) => (
+                                    <motion.a key={index} href={social.url} target="_blank" rel="noopner noreferrer" whileHover={{ scale: 1.1, y: -3 }} whileTap={{ scale: 0.9 }} className={`w-12 h-12 rounded-2xl bg-base-200/50 flex items-center justify-center text-base-content/60 hover:text-white transition-all duration-300 ${social.color}`} aria-level={`Follow us on social media`}>
+                                        {social.icon}
+                                    </motion.a>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Faq */}
+                        <div></div>
                     </motion.div>
                 </div>
             </div>
-
         </motion.div>
     );
 };
