@@ -116,6 +116,21 @@ const Contact = () => {
         { icon: <FaYoutube />, url: "https://youtube.com", color: "hover:bg-[#FF0000]" },
     ];
 
+    const faqs = [
+        {
+            question: "How quickly will I get a response?",
+            answer: "We typically respond within 24-48 hours during business days.",
+        },
+        {
+            question: "Can I apply for jobs through CareerCode?",
+            answer: "Yes! CareerCode connects you with thousands of job opportunities.",
+        },
+        {
+            question: "Is CareerCode free to use?",
+            answer: "Yes, CareerCode is completely free for job seekers.",
+        },
+    ];
+
 
 
 
@@ -253,7 +268,21 @@ const Contact = () => {
                         </div>
 
                         {/* Faq */}
-                        <div></div>
+                        <div className="bg-base-100 rounded-3xl shadow-2xl border border-base-200/50 p-6">
+                            <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><span className="text-accent">❓</span>Quick Answers</h3>
+
+                            <div className="space-y-4">
+                                {faqs.map((faq, index) => (
+                                    <motion.div key={index} whileHover={{ x: 5 }} className="group cursor-pointer">
+                                        <p className="text-sm font-semibold group-hover:text-primary transition-colors">{faq.question}</p>
+                                        <p className="text-xs text-base-content/50 mt-1">{faq.answer}</p>
+                                        {index < faqs.length - 1 && (
+                                            <div className="border-t border-base-200/50 mt-3"></div>
+                                        )}
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
                     </motion.div>
                 </div>
             </div>
