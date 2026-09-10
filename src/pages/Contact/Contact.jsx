@@ -1,7 +1,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { FaArrowRight, FaCheckCircle, FaClock, FaEnvelope, FaFacebookF, FaInstagram, FaLinkedinIn, FaMapMarkerAlt, FaPaperPlane, FaPhone, FaSpinner, FaTwitter, FaUser, FaYoutube } from "react-icons/fa";
+import { FaArrowRight, FaBuilding, FaCheckCircle, FaClock, FaEnvelope, FaFacebookF, FaGlobe, FaHome, FaInstagram, FaLinkedinIn, FaMapMarkerAlt, FaPaperPlane, FaPhone, FaSpinner, FaTwitter, FaUser, FaYoutube } from "react-icons/fa";
 import { FaSeedling } from "react-icons/fa6";
 
 
@@ -281,6 +281,28 @@ const Contact = () => {
                                         )}
                                     </motion.div>
                                 ))}
+                            </div>
+                        </div>
+
+                        {/* Office Location */}
+                        <div className="bg-linear-to-br from-primary/10 via-secondary/5 to-accent/10 rounded-3xl border border-primary/10 p-6">
+                            <h3 className="text-lg font-bold mb-3 flex items-center gap-2"><span className="text-primary">📍</span> Our Office</h3>
+
+                            <div className="space-y-2 text-sm text-base-content/70">
+                                <p className="flex items-center gap-2"><FaBuilding className="text-primary" />
+                                    123 Career Street, Tech City
+                                </p>
+                                <p className="flex items-center gap-2">
+                                    <FaGlobe className="text-secondary" />
+                                    Global Presence in 150+ Countries
+                                </p>
+                                <p className="flex items-center gap-2">
+                                    <FaHome className="text-accent" />
+                                    Remote-First Company
+                                </p>
+                            </div>
+                            <div className="mt-4 h-32 rounded-2xl bg-base-200/50 flex items-center justify-center text-base-content/40">
+                                <span className="text-sm">📍 Map Integration Coming Soon</span>
                             </div>
                         </div>
                     </motion.div>
