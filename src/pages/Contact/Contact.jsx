@@ -306,6 +306,21 @@ const Contact = () => {
                             </div>
                         </div>
                     </motion.div>
+
+                    {/* Map Section */}
+                    <motion.div variants={itemVariants} className="mt-12 bg-base-100 rounded-3xl shadow-2xl border border-base-200/50 p-6 overflow-hidden">
+                        <div className="flex items-center gap-3 mb-4">
+                            <span className="text-2xl">🗺️</span>
+                            <h2 className="text-xl font-bold">Find Us on the Map</h2>
+                        </div>
+                        <div className="w-full h-64 rounded-2xl bg-base-200/50 flex items-center justify-center text-base-content/40">
+                            <div className="text-center">
+                                <span className="text-4xl mb-2 block">📍</span>
+                                <p className="text-sm">123 Career Street, Tech City, TC 12345</p>
+                                <p className="text-xs mt-1">Google Maps Integration Coming Soon</p>
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
             </div>
         </motion.div>
