@@ -14,6 +14,7 @@ import Jobs from "../pages/Jobs/Jobs";
 import MyPostedJobs from "../pages/Jobs/MyPostedJobs";
 import UpdateJob from "../pages/UpdateJob/UpdateJob";
 import Contact from "../pages/Contact/Contact";
+import NotFound from "../pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
     {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
             {
                 path: "/contact",
                 Component: Contact
+            },
+            {
+                path: "*",
+                Component: NotFound
             }
         ]
     },
