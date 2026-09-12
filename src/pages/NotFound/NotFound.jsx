@@ -1,5 +1,5 @@
 
-import { easeInOut, motion } from "framer-motion";
+import { easeInOut, motion, number } from "framer-motion";
 
 const NotFound = () => {
 
@@ -38,6 +38,21 @@ const NotFound = () => {
         },
     };
 
+    const numberVariants = {
+        hidden: { opacity: 0, scale: 0.5, rotate: -10 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            transition: {
+                duration: 0.8,
+                ease: "easeOut",
+                type: "spring",
+                stiffness: 150,
+            },
+        },
+    };
+
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="min-h-screen overflow-hidden py-12 relative flex items-center justify-center bg-linear-to-br from-base-200 via-base-100 to-primary/5 px-4">
@@ -61,6 +76,15 @@ const NotFound = () => {
                         <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl"></div>
                         <div className="relative w-24 h-24 rounded-full bg-linear-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-5xl">👻</div>
                     </div>
+                </motion.div>
+
+                {/* 404 Numbers */}
+                <motion.div variants={numberVariants} className="relative inline-block mb-6">
+                    <h1 className="text-[120px] md:text-[180px] font-black leading-none bg-linear-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">404</h1>
+
+                    <motion.div animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }} className="absolute inset-0 text-[120px] md:text-[180px] font-black leading-none text-primary/20 blur-2xl select-none">
+                        404
+                    </motion.div>
                 </motion.div>
             </motion.div>
         </motion.div>
