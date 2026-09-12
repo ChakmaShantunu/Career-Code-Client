@@ -27,6 +27,17 @@ const NotFound = () => {
         },
     };
 
+    const floatVariants = {
+        animate: {
+            y: [0, -15, 0],
+            transition: {
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+            },
+        },
+    };
+
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="min-h-screen overflow-hidden py-12 relative flex items-center justify-center bg-linear-to-br from-base-200 via-base-100 to-primary/5 px-4">
@@ -41,7 +52,17 @@ const NotFound = () => {
 
                 <motion.div animate={{ rotate: [360, 0] }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} className="w-125 h-125 border border-secondary/5 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></motion.div>
             </div>
-            <div></div>
+
+            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="relative max-w-3xl mx-auto text-center">
+
+                {/* Floating Ghost Icon */}
+                <motion.div variants={floatVariants} animate="animate" className="inline-block mb-6">
+                    <div className="relative">
+                        <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl"></div>
+                        <div className="relative w-24 h-24 rounded-full bg-linear-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-5xl">👻</div>
+                    </div>
+                </motion.div>
+            </motion.div>
         </motion.div>
     );
 };
