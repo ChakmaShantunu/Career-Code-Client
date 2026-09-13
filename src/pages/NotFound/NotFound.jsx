@@ -86,6 +86,14 @@ const NotFound = () => {
                         404
                     </motion.div>
                 </motion.div>
+
+                {/* Message */}
+                <motion.h2
+                    variants={itemVariants}
+                    className="text-3xl md:text-4xl font-bold mb-4"
+                >
+                    Oops! Page Not Found
+                </motion.h2>
             </motion.div>
         </motion.div>
     );
