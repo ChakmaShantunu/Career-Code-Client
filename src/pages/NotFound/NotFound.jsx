@@ -94,6 +94,15 @@ const NotFound = () => {
                 >
                     Oops! Page Not Found
                 </motion.h2>
+
+                <motion.p
+                    variants={itemVariants}
+                    className="text-base-content/60 text-lg max-w-lg mx-auto leading-relaxed mb-8"
+                >
+                    The page you're looking for seems to have wandered off.
+                    Don't worry, even the best of us get lost sometimes.
+                    Let's get you back on track!
+                </motion.p>
             </motion.div>
         </motion.div>
     );
