@@ -1,7 +1,11 @@
 
 import { easeInOut, motion, number } from "framer-motion";
+import { FaArrowLeft, FaHome } from "react-icons/fa";
+import { Link, useNavigate } from "react-router";
 
 const NotFound = () => {
+
+    const navigate = useNavigate();
 
     // Animation Variants
     const containerVariants = {
@@ -103,6 +107,39 @@ const NotFound = () => {
                     Don't worry, even the best of us get lost sometimes.
                     Let's get you back on track!
                 </motion.p>
+
+                {/* Action buttons*/}
+                <motion.div
+                    variants={itemVariants}
+                    className="flex flex-wrap justify-center gap-4 mb-10"
+                >
+                    <motion.button
+                        whileHover={{
+                            scale: 1.05,
+                            boxShadow: "0 20px 40px -10px rgba(0,0,0,0.3)",
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => navigate(-1)}
+                        className="btn btn-outline btn-primary rounded-xl px-8 gap-2"
+                    >
+                        <FaArrowLeft />
+                        Go Back
+                    </motion.button>
+
+                    <Link to="/">
+                        <motion.button
+                            whileHover={{
+                                scale: 1.05,
+                                boxShadow: "0 20px 40px -10px rgba(0,0,0,0.3)",
+                            }}
+                            whileTap={{ scale: 0.95 }}
+                            className="btn btn-primary rounded-xl px-8 gap-2 shadow-lg shadow-primary/20"
+                        >
+                            <FaHome />
+                            Back to Home
+                        </motion.button>
+                    </Link>
+                </motion.div>
             </motion.div>
         </motion.div>
     );
