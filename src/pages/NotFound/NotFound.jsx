@@ -1,6 +1,6 @@
 
 import { easeInOut, motion, number } from "framer-motion";
-import { FaArrowLeft, FaHome } from "react-icons/fa";
+import { FaArrowLeft, FaBriefcase, FaCompass, FaEnvelope, FaHome } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 
 const NotFound = () => {
@@ -56,6 +56,13 @@ const NotFound = () => {
             },
         },
     };
+
+    const quickLinks = [
+        { path: "/", label: "Home", icon: <FaHome /> },
+        { path: "/jobs", label: "Browse Jobs", icon: <FaBriefcase /> },
+        { path: "/about", label: "About Us", icon: <FaCompass /> },
+        { path: "/contact", label: "Contact", icon: <FaEnvelope /> },
+    ];
 
 
     return (
@@ -139,6 +146,18 @@ const NotFound = () => {
                             Back to Home
                         </motion.button>
                     </Link>
+                </motion.div>
+
+                {/* Quick Links */}
+                <motion.div variants={itemVariants} className="mb-8">
+                    <p className="text-sm text-base-content/40 uppercase mb-4 tracking-wider">Or try these gaps</p>
+                    <div className="flex flex-wrap justify-center gap-3">
+                        {quickLinks.map((link, index) => (
+                            <motion.div key={index} whileHover={{ y: -4, scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                <Link to={link.path} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-base-100/80 backdrop-blur-sm border border-base-200/50 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 text-sm font-medium group"><span className="text-primary group-hover: scale-110 transition-transform">{link.icon}</span> {link.label}</Link>
+                            </motion.div>
+                        ))}
+                    </div>
                 </motion.div>
             </motion.div>
         </motion.div>
